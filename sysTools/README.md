@@ -23,3 +23,9 @@ copies of those here as a reference.  I've disabled
 two ports on the Jekyll side since I wasn't sure what 
 they were actually for, and moved one port to not conflict
 with the Grafana installation sitting on :3000.
+
+The landing page will be rebuilt if needed on every
+stop/start of the jekyll container; 
+```docker-compose stop jekyll; docker-compose up -d``` 
+in the [mainLandingPage](mainLandingPage) directory
+will get that going.
