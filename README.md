@@ -8,8 +8,10 @@ and docker-compose (v3) at the moment.
 - Chronograf
 - Grafana
 - ActiveMQ
-- Lowell DataServants
-- (soon) Lowell Mr. Freeze
+- Lowell Specific Utilities
+    - ligmos
+    - DataServants
+    - (coming soon) Lowell Mr. Freeze
 
 ## sysTools
 - Dell OpenManage Server Administrator, v8.2
