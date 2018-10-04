@@ -6,7 +6,7 @@ are quickly growing.
 ## Usage
 
 Once cloned, adjust the version numbers as needed in 
-[dockerEnvFile.sh](dockerEnvFile.sh) and run it as the user who will be
+[dockEnvFile.sh](dockEnvFile.sh) and run it as the user who will be
 managing the docker data.  
 
 Ensure that the data path exists for that user as well.  The 
