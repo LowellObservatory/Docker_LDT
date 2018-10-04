@@ -1,0 +1,14 @@
+*.env
+*.conf
+*.mib
+
+old/*
+
+*.tar.gz
+
+_site/*
+.sass-cache/*
+Gemfile.lock
+*.gem
+vendor
+serviceTable.md
