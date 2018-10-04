@@ -1,0 +1,16 @@
+# DockerDev
+Repository of container files for Lowell codes, mostly using Docker 
+and docker-compose (v3) at the moment.
+
+## DCTStack
+- Telegraf
+- InfluxDB
+- Chronograf
+- Grafana
+- ActiveMQ
+- Lowell DataServants
+- (soon) Lowell Mr. Freeze
+
+## sysTools
+- Dell OpenManage Server Administrator, v8.2
+- jekyll
