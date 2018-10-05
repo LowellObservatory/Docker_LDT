@@ -25,9 +25,10 @@ specified Grafana plugins.  After it's done, ```docker-compose up -d```
 should start everything.  Monitor the processes via ```docker stats```
 or by setting up the monitor in Grafana.
 
-## 2018 10 04 - Important Caveat!
+## 2018 10 05 - Important Caveat!
 
-The Dockerfile for the DataServants python environment is a separate step;
-I'm working on pulling that into here still, it'll be obvious once it
-drops in.  Attempting to start the docker-compose file before
-the pytest image is built by hand will fail!
+I haven't tested a fresh start/clone since I put in the LIG
+codes as submodules; it's possible I'm forgetting a 
+```git submodule update --remote --merge``` step before everything
+will build, or maybe it's an initial flag during the initial clone
+operation that I'm forgetting.  Just a warning.
