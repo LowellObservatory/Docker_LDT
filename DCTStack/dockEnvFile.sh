@@ -24,6 +24,12 @@ DCDOCKERID=`getent group docker | cut -d: -f3`
 DOCKDATADIR="$HOME/DockerData/"
 DOCKDEVDIR="$HOME/DockerDev/DCTStack/"
 
+# This next one is super annoying, but this 
+#   has to be RELATIVE to the current directory
+#   since COPY in Dockerfiles is relative to 
+#   the build context (which is '.').
+LIGCODEDIR="$HOME/Codes/LIG/"
+
 # Now put it all into the .env file
 # Print a header so we know its vintage
 echo "# Created on `date -u` by $USER" > .env
@@ -34,6 +40,7 @@ echo "DCGRPID=$DCGRPID" >> .env
 echo "DCDOCKERID=$DCDOCKERID" >> .env
 echo "DCDATADIR=$DOCKDATADIR" >> .env
 echo "DCDEVDIR=$DOCKDEVDIR" >> .env
+echo "LIGCODEDIR=$LIGCODEDIR" >> .env
 echo "# Component versions to use" >> .env
 echo "TELEGRAF_VERSION=$TELEGRAF_VERSION" >> .env
 echo "INFLUXDB_VERSION=$INFLUXDB_VERSION" >> .env

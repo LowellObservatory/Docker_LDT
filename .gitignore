@@ -1,5 +1,11 @@
+*.swp
 *.env
-*.conf
+iago.conf
+mandos.conf
+alfred.conf
+mrfreeze.conf
+wadsworth.conf
+passwords.conf
 *.mib
 
 old/*

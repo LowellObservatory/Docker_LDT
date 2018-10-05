@@ -21,7 +21,7 @@ services:
       - 61613:61613
       - 61616:61616
     volumes:
-      - ${DCDEVDIR}/activemq.xml:/opt/apache-activemq-5.15.4/conf/activemq.xml:ro
+      - ${DCDEVDIR}/config/activemq.xml:/opt/apache-activemq-5.15.4/conf/activemq.xml:ro
     networks:
       - default
     restart: always
@@ -34,7 +34,7 @@ services:
     volumes:
       - ${DCDATADIR}/influxdb:/var/lib/influxdb
       - ${DCDATADIR}/logs/influxdb:/var/log/influxdb
-      - ${DCDEVDIR}/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - ${DCDEVDIR}/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
     networks:
       - default
     user: ${DCUSERID}:${DCGRPID}
@@ -74,7 +74,7 @@ services:
     hostname: telegrafDocker
     volumes:
       - ${DCDATADIR}/logs/telegraf/:/var/log/
-      - ${DCDEVDIR}/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ${DCDEVDIR}/config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
       - /sys:/rootfs/sys:ro
       - /proc:/rootfs/proc:ro
       - /etc:/rootfs/etc:ro
@@ -99,8 +99,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ${DCDEVDIR}/grafana.ini:/etc/grafana/grafana.ini
-      - ${DCDEVDIR}/lowell_logo_large_transparentbg.png:/usr/share/grafana/public/img/lowell.png
+      - ${DCDEVDIR}/config/grafana.ini:/etc/grafana/grafana.ini
+      - ${DCDEVDIR}/extras/lowell_logo_large_transparentbg.png:/usr/share/grafana/public/img/lowell.png
       - ${DCDATADIR}/grafana/grafana.db:/var/lib/grafana/grafana.db
       - ${DCDATADIR}/grafana/sessions:/var/lib/grafana/sessions
       - ${DCDATADIR}/logs/grafana:/var/log/grafana
@@ -112,6 +112,13 @@ services:
     restart: always
 
   iago:
+    build:
+      context: '.'
+      dockerfile: LIGDockerfile
+      args:
+        - userid=${DCUSERID}
+        - groupid=${DCGRPID}
+        - ligdir=${LIGCODEDIR}
     image: 'pytest'
     container_name: 'iago'
     volumes:
