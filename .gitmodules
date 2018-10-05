@@ -1,0 +1,9 @@
+[submodule "DCTStack/LIG/DataServants"]
+	path = DCTStack/LIG/DataServants
+	url = https://github.com/LowellObservatory/DataServants
+[submodule "DCTStack/LIG/ligmos"]
+	path = DCTStack/LIG/ligmos
+	url = https://github.com/LowellObservatory/ligmos
+[submodule "DCTStack/LIG/MrFreeze"]
+	path = DCTStack/LIG/MrFreeze
+	url = https://github.com/LowellObservatory/MrFreeze

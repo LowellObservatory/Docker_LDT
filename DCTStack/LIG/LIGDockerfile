@@ -1,0 +1,55 @@
+FROM continuumio/miniconda3
+
+ARG userid="31415"
+ARG groupid="31415"
+
+# In the *container*
+#   Note that a matching group is added automatically
+RUN addgroup --gid ${groupid} lig && \
+    adduser lig --uid ${userid} --gid ${groupid} \
+    --gecos '' --disabled-password 
+
+# Stuff needed to get SNMP up and running
+#RUN echo "deb http://deb.debian.org/debian stretch main contrib non-free\ndeb http://security.debian.org/debian-security/ stretch/updates main contrib non-free\ndeb http://deb.debian.org/debian stretch-updates main contrib non-free" > /etc/apt/sources.list
+#RUN echo "# As the snmp packages come without MIB files due to license reasons, loading\n# of MIBs is disabled by default. If you added the MIBs you can reenable\n# loading them by commenting out the following line.\n#mibs :" > /etc/snmp/snmp.conf
+
+# Additional quality-of-life packages
+RUN apt-get update --fix-missing && apt-get install -y vim
+
+# Copy in the lists of stuff that Conda and pip need to install
+#   (./ is relative to WORKDIR)
+COPY --chown=lig:lig conda_install.txt ./
+COPY --chown=lig:lig pip_install.txt ./
+
+# One layer each for the conda and pip installs
+RUN conda update -n base conda && conda install -c conda-forge pip && conda install -y --file conda_install.txt
+RUN pip install --no-cache-dir -r pip_install.txt
+
+# At this point it's a minimal working LIG python image
+#   so copy in the LIG codes and get them going
+USER lig:lig
+WORKDIR /home/lig/
+RUN mkdir conf && mkdir logs && mkdir Codes
+
+# More SNMP stuff
+#RUN mkdir /home/lig/.snmp
+#COPY --chown=lig:lig MIBs/* /home/lig/.snmp/
+
+ARG ligdir="./"
+
+WORKDIR /home/lig/Codes/
+COPY --chown=lig:lig ${ligdir}/ligmos ./ligmos
+COPY --chown=lig:lig ${ligdir}/MrFreeze ./MrFreeze
+COPY --chown=lig:lig ${ligdir}/DataServants ./DataServants
+
+# Install the ligmos library, for all users
+WORKDIR /home/lig/Codes/ligmos
+
+USER root
+RUN pip install -e .
+
+# Dump us into an iPython shell if there's no
+#   actual command issued to start a LIG code
+USER lig
+WORKDIR /home/lig/
+CMD ["ipython"]

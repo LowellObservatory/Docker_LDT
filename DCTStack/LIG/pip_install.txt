@@ -1,0 +1,10 @@
+stomp.py 
+xxhash 
+serviceping 
+influxdb 
+pid 
+ipdb 
+xmlschema 
+xmltodict
+pyserial
+pysnmp

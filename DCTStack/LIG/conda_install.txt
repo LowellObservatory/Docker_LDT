@@ -1,0 +1,15 @@
+numpy 
+scipy 
+matplotlib 
+astropy 
+ipython 
+sphinx 
+sphinx_rtd_theme 
+nose 
+cython 
+swig 
+pillow 
+pandas 
+paramiko 
+psutil 
+pylint
