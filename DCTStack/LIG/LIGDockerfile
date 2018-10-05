@@ -35,12 +35,10 @@ RUN mkdir conf && mkdir logs && mkdir Codes
 #RUN mkdir /home/lig/.snmp
 #COPY --chown=lig:lig MIBs/* /home/lig/.snmp/
 
-ARG ligdir="./"
-
 WORKDIR /home/lig/Codes/
-COPY --chown=lig:lig ${ligdir}/ligmos ./ligmos
-COPY --chown=lig:lig ${ligdir}/MrFreeze ./MrFreeze
-COPY --chown=lig:lig ${ligdir}/DataServants ./DataServants
+COPY --chown=lig:lig ./ligmos ./ligmos
+COPY --chown=lig:lig ./MrFreeze ./MrFreeze
+COPY --chown=lig:lig ./DataServants ./DataServants
 
 # Install the ligmos library, for all users
 WORKDIR /home/lig/Codes/ligmos

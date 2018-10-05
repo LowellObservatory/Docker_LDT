@@ -113,16 +113,15 @@ services:
 
   iago:
     build:
-      context: '.'
+      context: './LIG/'
       dockerfile: LIGDockerfile
       args:
         - userid=${DCUSERID}
         - groupid=${DCGRPID}
-        - ligdir=${LIGCODEDIR}
     image: 'pytest'
     container_name: 'iago'
     volumes:
-      - ${DCDEVDIR}:/home/lig/conf
+      - ${DCDEVDIR}/config/:/home/lig/conf
       - ${DCDATADIR}/logs/lig:/home/lig/logs
     depends_on:
       - 'influxdb'
@@ -138,7 +137,7 @@ services:
     image: 'pytest'
     container_name: 'alfred'
     volumes:
-      - ${DCDEVDIR}:/home/lig/conf
+      - ${DCDEVDIR}/config/:/home/lig/conf
       - ${DCDATADIR}/logs/lig:/home/lig/logs
     depends_on:
       - 'influxdb'
