@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  apachephp:
+    build:
+      context: '.'
+      dockerfile: 'webStackDockerfile'
+      args:
+        - php_version=${PHP_VERSION}
+    container_name: 'allSkyCamStack'
+    ports:
+      - 8080:80
+    networks:
+      - default
+
+
+networks:
+  default:
+    driver: bridge
