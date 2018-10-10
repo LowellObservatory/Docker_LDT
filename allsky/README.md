@@ -24,3 +24,9 @@ or by setting up the monitor in Grafana.
 
 It's technically functional, but functionally useless at the moment. 
 Still definitely a work-in-progress.
+
+[dockEnvFile.sh](dockEnvFile.sh) is still checking the 
+[DCTStack](../DCTStack) data paths; needs to be changed and updated 
+once it's clear what the outputs of this actually will be, if any.  
+It also might be good to define an input site path too, if we decide 
+to not put the actual site as a submodule for whatever reason.
