@@ -16,3 +16,9 @@ and docker-compose (v3) at the moment.
 ## sysTools
 - Dell OpenManage Server Administrator, v8.2
 - jekyll
+
+## allsky
+- PHP
+    - Includes Apache
+- Basic networking tools (rsync, wget)
+- Imagemagick
