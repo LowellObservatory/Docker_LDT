@@ -12,6 +12,8 @@ services:
       - 8080:80
     networks:
       - default
+    volumes:
+      - ./test.php:/var/www/html/index.php
 
 
 networks:
