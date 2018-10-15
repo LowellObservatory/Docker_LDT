@@ -4,6 +4,13 @@ Primarily for showing webcam snippets and images/animations from the all sky mon
 
 ## Usage
 
+If you're using a debian-esque machine as the docker host,
+make sure that you ```sudo apt-get install nfs-common``` 
+before you do much else.  If you're not using any NFS mounts,
+you should probably also remove those lines from the 
+[docker-compose.yml](docker-compose.yml) file to make sure it 
+doesn't fail if it can't find any of the system NFS tools.
+
 Once cloned, adjust the version numbers as needed in 
 [dockEnvFile.sh](dockEnvFile.sh).
 
