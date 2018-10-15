@@ -6,6 +6,7 @@ alfred.conf
 mrfreeze.conf
 wadsworth.conf
 passwords.conf
+nfsMounts.conf
 *.mib
 
 old/*

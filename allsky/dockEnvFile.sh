@@ -23,6 +23,7 @@ DCDOCKERID=`getent group docker | cut -d: -f3`
 DOCKDATADIR="$HOME/DockerData/"
 DOCKDEVDIR="$HOME/DockerDev/allsky/"
 
+
 # Now put it all into the .env file
 # Print a header so we know its vintage
 echo "# Created on `date -u` by $USER" > .env
@@ -35,6 +36,16 @@ echo "DCDATADIR=$DOCKDATADIR" >> .env
 echo "DCDEVDIR=$DOCKDEVDIR" >> .env
 echo "# Component versions to use" >> .env
 echo "PHP_VERSION=$PHP_VERSION" >> .env
+
+# Grab the NFS mount information
+if [ -f "./nfsMounts.conf" ]; then
+    source "./nfsMounts.conf"
+    echo "NFSRIP=$nfsrip" >> .env
+    echo "NFSRDIR=$nfsrdir" >> .env
+    echo "NFSLDIR=$nfsldir" >> .env
+else
+    echo "No NFS mounts defined! Skipping."
+fi
 
 echo "./.env contents:"
 echo "==========="

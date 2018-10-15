@@ -14,7 +14,16 @@ services:
       - default
     volumes:
       - ./test.php:/var/www/html/index.php
+      - ./httpdOpts.conf:/etc/apache2/sites-enabled/000-default.conf
+      - nfsmountCC:${NFSLDIR}
 
+volumes:
+  nfsmountCC:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${NFSRIP}
+      device: ":${NFSRDIR}"
 
 networks:
   default:
