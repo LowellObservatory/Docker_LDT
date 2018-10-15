@@ -2,7 +2,7 @@ ARG php_version="7.2-apache-stretch"
 
 FROM php:${php_version}
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y imagemagick vim rsync wget
+RUN apt-get update && apt-get upgrade -y && apt-get install -y imagemagick vim rsync wget mencoder ffmpeg libavcodec-extra libavfilter-extra 
 
 # Use the default production configuration
 RUN mv $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
