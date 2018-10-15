@@ -5,15 +5,23 @@ Primarily for showing webcam snippets and images/animations from the all sky mon
 ## Usage
 
 Once cloned, adjust the version numbers as needed in 
-[dockEnvFile.sh](dockEnvFile.sh) and run it as the user who will be
-managing the docker data.  
+[dockEnvFile.sh](dockEnvFile.sh).
+
+Take a look at [nfsMounts.conf-TEMPLATE](nfsMounts.conf-TEMPLATE);
+if there is no NFS mount needed, ignore it and move on.  If there
+is a mount needed, fill in the TEMPLATE file as appropriate and 
+save it as ```nfsMounts.conf``` in the same directory.
+
+Run the ```dockEnvFile.sh``` as the user who will be
+managing the docker data.  This will set up everything that
+```docker-compose``` needs to build the services and start them.
 
 Ensure that the data path exists for that user as well.  The 
 __entire__ directory structure needs to be created before the
 first use, otherwise docker will create the directories on the fly
 and they will likely have permissions problems.
 
-Once those two steps are complete, ```docker-compose build``` should 
+Once those steps are complete, ```docker-compose build``` should 
 create the images with additional steps needed to flesh out the environment.
 
 After it's done, ```docker-compose up -d```
