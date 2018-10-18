@@ -12,6 +12,14 @@ services:
     privileged: true
     volumes:
      - "/lib/modules:/lib/modules:ro"
+ nginx:
+    container_name: nginx
+    image: nginx:stable-alpine
+    ports:
+     - 80:80
+    network_mode: "host"
+    volumes:
+     - $PWD/nginx_routing.conf:/etc/nginx/conf.d/default.conf
  jekyll:
     container_name: jekyll
     command: jekyll serve
@@ -20,7 +28,7 @@ services:
       - $PWD:/srv/jekyll
       - $PWD/vendor/bundle:/usr/local/bundle
     ports:
-      - 4000:4000
-      #- 35729:35729
-      #- 6000:3000
-      -   80:4000
+     - 4000:4000
+     #- 35729:35729
+     #- 6000:3000
+    network_mode: "host"
