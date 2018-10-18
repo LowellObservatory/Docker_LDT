@@ -28,3 +28,10 @@ copies of those here as a reference.  I've disabled
 two ports on the Jekyll side since I wasn't sure what 
 they were actually for, and moved one port to not conflict
 with the Grafana installation sitting on :3000.
+
+Yes, I know I can just serve the landing page via 
+nginx rather than spinning up both jekyll and nginx;
+but I'm doing this fast rather than right at the moment,
+and spinning up jekyll at least ensures that the page
+is built each time rather than serving up the
+old static content.
