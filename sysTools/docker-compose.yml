@@ -25,7 +25,7 @@ services:
     command: jekyll serve
     image: jekyll/jekyll:latest
     volumes:
-      - $PWD:/srv/jekyll
+      - $PWD/mainLandingPage/:/srv/jekyll
       - $PWD/vendor/bundle:/usr/local/bundle
     ports:
      - 4000:4000
