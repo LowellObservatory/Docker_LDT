@@ -15,6 +15,7 @@ and docker-compose (v3) at the moment.
 
 ## sysTools
 - Dell OpenManage Server Administrator, v8.2
+- nginx (for DNS CNAME routing)
 - jekyll
 
 ## allsky
