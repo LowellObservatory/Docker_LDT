@@ -1,6 +1,23 @@
 version: '3'
 
 services:
+  dct_asc_webcams:
+   build:
+      context: './dct_asc_scripts/'
+      dockerfile: 'Dockerfile'
+   container_name: 'dct_asc_cams'
+   depends_on: 
+      - "apachephp"
+   volumes:
+      - nfsmountCC:${NFSLDIR}
+      - ./camimages:/home/lig/Codes/dct_asc/images
+      - ./camimages/dct:/home/lig/Codes/dct_asc/images/dct
+      - ./camimages/mesa:/home/lig/Codes/dct_asc/images/mesa
+   working_dir: /home/lig/Codes/dct_asc/
+   command: ["python", "camScheduler.py"]
+   networks:
+      - default
+
   apachephp:
     build:
       context: '.'
@@ -13,8 +30,10 @@ services:
     networks:
       - default
     volumes:
-      - ./test.php:/var/www/html/index.php
+#      - ./test.php:/var/www/html/index.php
+      - ./allskysite/:/var/www/html/
       - ./httpdOpts.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./camimages/:/var/www/html/webcams/:ro
       - nfsmountCC:${NFSLDIR}
 
 volumes:

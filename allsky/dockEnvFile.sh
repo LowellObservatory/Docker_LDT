@@ -23,7 +23,6 @@ DCDOCKERID=`getent group docker | cut -d: -f3`
 DOCKDATADIR="$HOME/DockerData/"
 DOCKDEVDIR="$HOME/DockerDev/allsky/"
 
-
 # Now put it all into the .env file
 # Print a header so we know its vintage
 echo "# Created on `date -u` by $USER" > .env
