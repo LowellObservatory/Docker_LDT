@@ -67,6 +67,7 @@ services:
         - dockergid=${DCDOCKERID}
     image: 'telegraf/telegrafuserland:${TELEGRAF_VERSION}-alpine'
     container_name: 'telegraf'
+    privileged: true
     environment:
       HOST_PROC: /rootfs/proc
       HOST_SYS: /rootfs/sys
