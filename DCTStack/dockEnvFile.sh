@@ -58,8 +58,16 @@ if [ ! -d "$DOCKDATADIR" ]; then
     echo "$DOCKDATADIR doesn't exist!"
     mkdir "$DOCKDATADIR"
 else
-    echo "$DOCKDATADIR exists, checking the rest..."
+    echo "$DOCKDATADIR exists! Excellent..."
 fi
+if [ ! -d "$DOCKDATADIR/logs/" ]; then
+    echo "$DOCKDATADIR/logs/ doesn't exist!"
+    mkdir "$DOCKDATADIR/logs/"
+else
+    echo "$DOCKDATADIR/logs exists! Good..."
+fi
+
+echo ""
 
 for i in "${services[@]}"
 do
@@ -75,6 +83,7 @@ do
     # Now do the same for the log directories
     # Check to see if the directories exist in the 
     #   already specified $DCDATADIR
+
     ldir="$DOCKDATADIR/logs/$i"
     if [ -d "$ldir" ]; then
         echo "$ldir is good!"
@@ -90,6 +99,8 @@ echo "========== NOTE =========="
 echo "If any directories are missed and docker creates"
 echo "them at runtime, they'll get created as root:root"
 echo "and everything will end in tears."
+echo ""
+echo "Same is true if there are any mkdir errors up there!"
 echo "========== NOTE =========="
 echo ""
 
