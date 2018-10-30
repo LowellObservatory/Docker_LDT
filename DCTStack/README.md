@@ -9,6 +9,15 @@ Once cloned, adjust the version numbers as needed in
 [dockEnvFile.sh](dockEnvFile.sh) and run it as the user who will be
 managing the docker data.  
 
+**NOTE** remember to clone on the command line so you can 
+grab the submodules in one go as well:
+
+```git clone --recurse-submodules https://github.com/LowellObservatory/DockerDev.git```
+
+If you forget, then navigate to the LIG subdirectory and do this:
+
+```git submodule update --init --recursive```
+
 Ensure that the data path exists for that user as well.  The 
 __entire__ directory structure needs to be created before the
 first use, otherwise docker will create the directories on the fly
