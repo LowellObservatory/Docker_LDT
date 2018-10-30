@@ -11,8 +11,12 @@
 export TELEGRAF_VERSION="1.8.1"
 export INFLUXDB_VERSION="1.6.4"
 export CHRONOGRAF_VERSION="1.6.2"
-export GRAFANA_VERSION="5.3.1"
+export GRAFANA_VERSION="5.3.2"
 export ACTIVEMQ_VERSION="5.15.4"
+
+# NO COMMAS!!!
+#   This list is used to check/make the data storage directories
+services=("chronograf" "grafana" "influxdb" "telegraf" "activemq" "lig")
 
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.
@@ -48,25 +52,45 @@ echo "==========="
 
 echo ""
 
-echo "Checking docker data directory..."
+echo "Checking docker data directories..."
+
 if [ ! -d "$DOCKDATADIR" ]; then
     echo "$DOCKDATADIR doesn't exist!"
     mkdir "$DOCKDATADIR"
-    mkdir "$DOCKDATADIR/influxdb"
-    mkdir "$DOCKDATADIR/grafana"
-    mkdir "$DOCKDATADIR/telegraf"
-    mkdir "$DOCKDATADIR/chronograf"
-    mkdir "$DOCKDATADIR/lig"
-    mkdir "$DOCKDATADIR/logs"
 else
-    echo "$HOME/DockerData/ exists! Hooray!"
-    echo ""
-    echo "========== NOTE =========="
-    echo "I'm assuming that all the directories we need exist;"
-    echo "If they don't, they'll get created as root:root"
-    echo "and everything will end in tears."
-    echo "========== NOTE =========="
-    echo ""
+    echo "$DOCKDATADIR exists, checking the rest..."
 fi
+
+for i in "${services[@]}"
+do
+    # Check to see if the directories exist in the 
+    #   already specified $DCDATADIR
+    dadir="$DOCKDATADIR/$i"
+    if [ -d "$dadir" ]; then
+        echo "$dadir is good!"
+    else
+        mkdir "$dadir"
+    fi
+
+    # Now do the same for the log directories
+    # Check to see if the directories exist in the 
+    #   already specified $DCDATADIR
+    ldir="$DOCKDATADIR/logs/$i"
+    if [ -d "$ldir" ]; then
+        echo "$ldir is good!"
+    else
+        echo "$ldir is nogood!"
+        mkdir "$ldir"
+    fi
+
+done
+
+echo ""
+echo "========== NOTE =========="
+echo "If any directories are missed and docker creates"
+echo "them at runtime, they'll get created as root:root"
+echo "and everything will end in tears."
+echo "========== NOTE =========="
+echo ""
 
 echo "Done! You can now use 'docker-compose ...' as usual."
