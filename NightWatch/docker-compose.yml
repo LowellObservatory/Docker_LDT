@@ -6,12 +6,15 @@ services:
       context: './Camelot/GOESMcGOESface/'
       dockerfile: 'Dockerfile'
     container_name: 'goesmcgoesface'
-    depends_on:
-      - "apachephp"
+#    depends_on:
+#      - "apachephp"
     volumes:
+      - ${DCDATADIR}/logs/goesmcgoesface:/home/lig/Codes/GOESMcGOESface/logs/
       - ${DCDATADIR}/goesmcgoesface/:/home/lig/Codes/GOESMcGOESface/outputs/
+        # NOTE: Still need to create this one by hand to get perms right, until I fix the dockEnv script...
+      - ${DCDATADIR}/goesmcgoesface/cartopy:/home/lig/.local/share/cartopy/
       - ${DCDEVDIR}/config/awsCreds.conf:/home/lig/Codes/GOESMcGOESface/awsCreds.conf
-    working_dir: /home/lig/Codes/GOESMcGOESFace/
+    working_dir: /home/lig/Codes/GOESMcGOESface/
     command: ["python", "goes16aws_looper.py"]
     networks:
       - default
@@ -29,6 +32,7 @@ services:
       - default
     volumes:
       - ./httpdOpts.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ${DCDATADIR}/goesmcgoesface/:/var/www/html/
 
 networks:
   default:
