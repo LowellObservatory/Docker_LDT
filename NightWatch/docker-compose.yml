@@ -10,6 +10,7 @@ services:
       - "apachephp"
     volumes:
       - ${DCDATADIR}/goesmcgoesface/:/home/lig/Codes/GOESMcGOESface/outputs/
+      - ${DCDEVDIR}/config/awsCreds.conf:/home/lig/Codes/GOESMcGOESface/awsCreds.conf
     working_dir: /home/lig/Codes/GOESMcGOESFace/
     command: ["python", "goes16aws_looper.py"]
     networks:
