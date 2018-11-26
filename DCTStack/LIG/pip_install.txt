@@ -8,3 +8,5 @@ xmlschema
 xmltodict
 pyserial
 pysnmp
+pyephem
+bs4

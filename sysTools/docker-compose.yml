@@ -18,6 +18,7 @@ services:
     ports:
      - 80:80
     network_mode: "host"
+    restart: always
     volumes:
      - $PWD/nginx_routing.conf:/etc/nginx/conf.d/default.conf
  jekyll:
@@ -32,3 +33,20 @@ services:
      #- 35729:35729
      #- 6000:3000
     network_mode: "host"
+    restart: always
+# gitlab:
+#    image: gitlab/gitlab-ce:11.4.0-ce.0
+#    container_name: gitlab
+#    hostname: dctsleeperservice
+#    environment:
+#      GITLAB_OMNIBUS_CONFIG: |
+#        gitlab_rails['gitlab_shell_ssh_port'] = 8822
+#    ports:
+#      - "443:443"
+#      - "8880:80"
+#      - "8822:22"
+#    volumes:
+#      - ./gitlab-logs:/var/log/gitlab
+#      - ./gitlab-config:/etc/gitlab
+#      - ./gitlab-data:/var/opt/gitlab
+#    restart: always

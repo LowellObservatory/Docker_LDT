@@ -7,3 +7,6 @@
 [submodule "DCTStack/LIG/MrFreeze"]
 	path = DCTStack/LIG/MrFreeze
 	url = https://github.com/LowellObservatory/MrFreeze
+[submodule "NightWatch/Camelot"]
+	path = NightWatch/Camelot
+	url = https://github.com/LowellObservatory/Camelot

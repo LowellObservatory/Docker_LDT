@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  goesmcgoesface:
+    build:
+      context: './Camelot/GOESMcGOESface/'
+      dockerfile: 'Dockerfile'
+    container_name: 'goesmcgoesface'
+    depends_on:
+      - "apachephp"
+    volumes:
+      - ${DCDATADIR}/goesmcgoesface/:/home/lig/Codes/GOESMcGOESface/outputs/
+    working_dir: /home/lig/Codes/GOESMcGOESFace/
+    command: ["python", "goes16aws_looper.py"]
+    networks:
+      - default
+
+  apachephp:
+    build:
+      context: '.'
+      dockerfile: 'webStackDockerfile'
+      args:
+        - php_version=${PHP_VERSION}
+    container_name: 'NightWatchWeb'
+    ports:
+      - 8080:80
+    networks:
+      - default
+    volumes:
+      - ./httpdOpts.conf:/etc/apache2/sites-enabled/000-default.conf
+
+networks:
+  default:
+    driver: bridge

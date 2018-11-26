@@ -14,15 +14,17 @@ RUN addgroup --gid ${groupid} lig && \
 #RUN echo "# As the snmp packages come without MIB files due to license reasons, loading\n# of MIBs is disabled by default. If you added the MIBs you can reenable\n# loading them by commenting out the following line.\n#mibs :" > /etc/snmp/snmp.conf
 
 # Additional quality-of-life packages
-RUN apt-get update --fix-missing && apt-get install -y vim
+RUN apt-get update --fix-missing && apt-get install -y vim build-essential gcc imagemagick vim rsync wget mencoder ffmpeg libavcodec-extra libavfilter-extra
 
 # Copy in the lists of stuff that Conda and pip need to install
 #   (./ is relative to WORKDIR)
 COPY --chown=lig:lig conda_install.txt ./
+COPY --chown=lig:lig condaforge_install.txt ./
 COPY --chown=lig:lig pip_install.txt ./
 
 # One layer each for the conda and pip installs
 RUN conda update -n base conda && conda install -c conda-forge pip && conda install -y --file conda_install.txt
+RUN conda install -c conda-forge --file condaforge_install.txt
 RUN pip install --no-cache-dir -r pip_install.txt
 
 # At this point it's a minimal working LIG python image

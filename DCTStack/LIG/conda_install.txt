@@ -13,3 +13,6 @@ pandas
 paramiko 
 psutil 
 pylint
+boto3
+netCDF4
+cartopy
