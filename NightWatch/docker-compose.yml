@@ -1,13 +1,28 @@
 version: '3'
 
 services:
+  webcammcwebcamface:
+    build:
+      context: './Camelot/WebcamMcWebcamface'
+      dockerfile: 'Dockerfile'
+    container_name: 'webcammcwebcamface'
+    depends_on:
+      - "apachephp"
+    volumes:
+      - ${DCDATADIR}/logs/webcammcwebcamface:/home/lig/Codes/WebcamMcWebcamface/logs/
+      - ${DCDATADIR}/webcammcwebcamface:/home/lig/Codes/WebcamMcWebcamface/images/
+      - ${DCDEVDIR}/config/webcams.conf:/home/lig/Codes/WebcamMcWebcamface/webcams.conf
+    working_dir: /home/lig/Codes/WebcamMcWebcamface
+    command: ["python", "camLooper.py"]
+    networks:
+      - default
   goesmcgoesface:
     build:
       context: './Camelot/GOESMcGOESface/'
       dockerfile: 'Dockerfile'
     container_name: 'goesmcgoesface'
-#    depends_on:
-#      - "apachephp"
+    depends_on:
+      - "apachephp"
     volumes:
       - ${DCDATADIR}/logs/goesmcgoesface:/home/lig/Codes/GOESMcGOESface/logs/
       - ${DCDATADIR}/goesmcgoesface/:/home/lig/Codes/GOESMcGOESface/outputs/
@@ -32,7 +47,8 @@ services:
       - default
     volumes:
       - ./httpdOpts.conf:/etc/apache2/sites-enabled/000-default.conf
-      - ${DCDATADIR}/goesmcgoesface/:/var/www/html/
+      - ${DCDATADIR}/goesmcgoesface/:/var/www/html/goes16
+      - ${DCDATADIR}/webcammcwebcamface/:/var/www/html/dctwebcams
 
 networks:
   default:

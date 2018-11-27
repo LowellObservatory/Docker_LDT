@@ -15,7 +15,7 @@ export PHP_VERSION="7.2-apache-stretch"
 
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories
-services=("apachephp" "goesmcgoesface")
+services=("apachephp" "goesmcgoesface" "webcammcwebcamface")
 
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.
