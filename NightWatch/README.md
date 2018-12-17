@@ -8,6 +8,11 @@ from the all sky camera.
 Once cloned, adjust the version numbers as needed in 
 [dockEnvFile.sh](dockEnvFile.sh).
 
+Create a subdirectory called 'config' and fill out the 
+necessary .conf files! See 
+[Camelot](https://github.com/LowellObservatory/Camelot/)
+ for more information and examples (like GOES or Webcams).
+
 Run the ```dockEnvFile.sh``` as the user who will be
 managing the docker data.  This will set up everything that
 ```docker-compose``` needs to build the services and start them.

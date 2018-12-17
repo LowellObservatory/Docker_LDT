@@ -17,6 +17,11 @@ export PHP_VERSION="7.2-apache-stretch"
 #   This list is used to check/make the data storage directories
 services=("apachephp" "goesmcgoesface" "webcammcwebcamface")
 
+# NO COMMAS!!!
+#   This list is for extra data dirs that I can't figure out
+#   how to check in a more automated/nice fashion.
+extraddirs=("goesmcgoesface/cartopy")
+
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.
 #   I'm sure others have screwed around with `dscl` or whatever to 
@@ -87,6 +92,18 @@ do
         mkdir "$ldir"
     fi
 
+done
+
+for i in "${extraddirs[@]}"
+do
+    # Check to see if the directories exist in the
+    #   already specified $DCDATADIR
+    dadir="$DOCKDATADIR/$i"
+    if [ -d "$dadir" ]; then
+        echo "$dadir is good!"
+    else
+        mkdir "$dadir"
+    fi
 done
 
 echo ""
