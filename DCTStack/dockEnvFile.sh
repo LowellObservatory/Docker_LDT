@@ -8,10 +8,10 @@
 #     2018/08/22
 
 # Desired component versions, hardcoded for production & stability
-export TELEGRAF_VERSION="1.9.0"
-export INFLUXDB_VERSION="1.7.1"
-export CHRONOGRAF_VERSION="1.7.3"
-export GRAFANA_VERSION="5.3.4"
+export TELEGRAF_VERSION="1.9.1"
+export INFLUXDB_VERSION="1.7.2"
+export CHRONOGRAF_VERSION="1.7.4"
+export GRAFANA_VERSION="5.4.2"
 export ACTIVEMQ_VERSION="5.15.4"
 
 # NO COMMAS!!!
