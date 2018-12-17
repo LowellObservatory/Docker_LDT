@@ -6,8 +6,8 @@ services:
       context: './Camelot/WebcamMcWebcamface'
       dockerfile: 'Dockerfile'
     container_name: 'webcammcwebcamface'
-    depends_on:
-      - "apachephp"
+#    depends_on:
+#      - "apachephp"
     volumes:
       - ${DCDATADIR}/logs/webcammcwebcamface:/home/lig/Codes/WebcamMcWebcamface/logs/
       - ${DCDATADIR}/webcammcwebcamface:/home/lig/Codes/WebcamMcWebcamface/images/
@@ -16,15 +16,17 @@ services:
     command: ["python", "camLooper.py"]
     networks:
       - default
+
   goesmcgoesface:
     build:
       context: './Camelot/GOESMcGOESface/'
       dockerfile: 'Dockerfile'
     container_name: 'goesmcgoesface'
     depends_on:
-      - "apachephp"
+#      - "apachephp"
+      - "webcammcwebcamface"
     volumes:
-      - ${DCDATADIR}/logs/goesmcgoesface:/home/lig/Codes/GOESMcGOESface/logs/
+      - ${DCDATADIR}/logs/goesmcgoesface/:/home/lig/Codes/GOESMcGOESface/logs/
       - ${DCDATADIR}/goesmcgoesface/:/home/lig/Codes/GOESMcGOESface/outputs/
       - ${DCDATADIR}/goesmcgoesface/cartopy:/home/lig/.local/share/cartopy/
       - ${DCDEVDIR}/config/awsCreds.conf:/home/lig/Codes/GOESMcGOESface/awsCreds.conf
@@ -40,6 +42,9 @@ services:
       args:
         - php_version=${PHP_VERSION}
     container_name: 'NightWatchWeb'
+    depends_on:
+      - "goesmcgoesface"
+      - "webcammcwebcamface"
     ports:
       - 8080:80
     networks:
