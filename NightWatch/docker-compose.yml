@@ -26,7 +26,6 @@ services:
     volumes:
       - ${DCDATADIR}/logs/goesmcgoesface:/home/lig/Codes/GOESMcGOESface/logs/
       - ${DCDATADIR}/goesmcgoesface/:/home/lig/Codes/GOESMcGOESface/outputs/
-        # NOTE: Still need to create this one by hand to get perms right, until I fix the dockEnv script...
       - ${DCDATADIR}/goesmcgoesface/cartopy:/home/lig/.local/share/cartopy/
       - ${DCDEVDIR}/config/awsCreds.conf:/home/lig/Codes/GOESMcGOESface/awsCreds.conf
     working_dir: /home/lig/Codes/GOESMcGOESface/
