@@ -35,13 +35,13 @@ services:
     network_mode: "host"
     restart: always
  portainer:
-    image: portainer/portainer
+    image: portainer/portainer:${PORTAINER_VERSION}
     ports:
       - "9000:9000"
     command: -H unix:///var/run/docker.sock
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ~/DockerData/portainer:/data
+      - ${DCDATADIR}/portainer:/data
     network_mode: "host"
     restart: always
 
