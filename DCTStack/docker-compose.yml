@@ -31,10 +31,12 @@ services:
     container_name: 'influxdb'
     ports: 
       - 8086:8086
+      - 8088:8088
     volumes:
       - ${DCDATADIR}/influxdb:/var/lib/influxdb
       - ${DCDATADIR}/logs/influxdb:/var/log/influxdb
       - ${DCDEVDIR}/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - ${DCDEVDIR}/influxbackupdump/:/home/influxbackups/
     networks:
       - default
     user: ${DCUSERID}:${DCGRPID}

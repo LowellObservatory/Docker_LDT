@@ -57,12 +57,14 @@ echo "Checking docker data directories..."
 if [ ! -d "$DOCKDATADIR" ]; then
     echo "$DOCKDATADIR doesn't exist!"
     mkdir "$DOCKDATADIR"
+    echo "...so I made it good."
 else
     echo "$DOCKDATADIR exists! Excellent..."
 fi
 if [ ! -d "$DOCKDATADIR/logs/" ]; then
     echo "$DOCKDATADIR/logs/ doesn't exist!"
     mkdir "$DOCKDATADIR/logs/"
+    echo "...so I made it good."
 else
     echo "$DOCKDATADIR/logs exists! Good..."
 fi
@@ -78,6 +80,7 @@ do
         echo "$dadir is good!"
     else
         mkdir "$dadir"
+        echo "...so I made it good."
     fi
 
     # Now do the same for the log directories
@@ -90,9 +93,19 @@ do
     else
         echo "$ldir is nogood!"
         mkdir "$ldir"
+        echo "...so I made it good."
     fi
 
 done
+
+backdir="$DOCKDEVDIR/influxbackupdump"
+if [ -d "$backdir" ]; then
+    echo "$backdir is good!"
+else
+    echo "$backdir is nogood!"
+    mkdir "$backdir"
+    echo "...so I made it good."
+fi
 
 echo ""
 echo "========== NOTE =========="
