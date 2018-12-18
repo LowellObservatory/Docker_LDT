@@ -12,7 +12,7 @@ export PORTAINER_VERSION="1.20.0"
 
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories
-services=("portainer")
+services=("portainer" "jekyll")
 
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.
@@ -22,7 +22,7 @@ DCUSERID=`getent passwd $USER | cut -d: -f3`
 DCGRPID=`getent passwd $USER | cut -d: -f4`
 DCDOCKERID=`getent group docker | cut -d: -f3`
 DOCKDATADIR="$HOME/DockerData/"
-DOCKDEVDIR="$HOME/DockerDev/DCTStack/"
+DOCKDEVDIR="$HOME/DockerDev/sysTools/"
 
 # Now put it all into the .env file
 # Print a header so we know its vintage
@@ -55,6 +55,7 @@ fi
 if [ ! -d "$DOCKDATADIR/logs/" ]; then
     echo "$DOCKDATADIR/logs/ doesn't exist!"
     mkdir "$DOCKDATADIR/logs/"
+    echo "... So I made it good"
 else
     echo "$DOCKDATADIR/logs exists! Good..."
 fi
@@ -70,6 +71,7 @@ do
         echo "$dadir is good!"
     else
         mkdir "$dadir"
+	echo "... So I made it good"
     fi
 
     # Now do the same for the log directories
@@ -82,6 +84,7 @@ do
     else
         echo "$ldir is nogood!"
         mkdir "$ldir"
+	echo "... So I made it good"
     fi
 
 done

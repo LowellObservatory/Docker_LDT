@@ -27,11 +27,12 @@ services:
     image: jekyll/jekyll:latest
     volumes:
       - $PWD/mainLandingPage/:/srv/jekyll
-      - $PWD/vendor/bundle:/usr/local/bundle
+      - ${DCDATADIR}/jekyll/:/usr/local/bundle
     ports:
      - 4000:4000
-     #- 35729:35729
-     #- 6000:3000
+    environment:
+     - JEKYLL_UID=${DCUSERID}
+     - JEKYLL_GID=${DCGRPID}
     network_mode: "host"
     restart: always
  portainer:
