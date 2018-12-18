@@ -18,8 +18,7 @@ and docker-compose (v3) at the moment.
 - nginx (for DNS CNAME routing)
 - jekyll
 
-## allsky
-- PHP
-    - Includes Apache
-- Basic networking tools (rsync, wget)
-- Imagemagick
+## NightWatch
+- Apache + PHP
+    - Basic networking tools (rsync, wget)
+- django, bokeh
