@@ -20,7 +20,7 @@ services=("apachephp" "goesmcgoesface" "webcammcwebcamface")
 # NO COMMAS!!!
 #   This list is for extra data dirs that I can't figure out
 #   how to check in a more automated/nice fashion.
-extraddirs=("goesmcgoesface/cartopy")
+extraddirs=("goesmcgoesface/cartopy" "goesmcgoesface/raws" "goesmcgoesface/nows" "goesmcgoesface/pngs")
 
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.
