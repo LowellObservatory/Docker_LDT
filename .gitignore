@@ -20,3 +20,6 @@ Gemfile.lock
 *.gem
 vendor
 serviceTable.md
+alfred_extraPings.conf
+influxbackupdump
+NightWatch/config
