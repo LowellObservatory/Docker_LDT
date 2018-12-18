@@ -12,7 +12,7 @@ fi
 
 if [ -z "$DCDATADIR" ]
 then
-    DCDATADIR="$HOME/DockerData/"
+    DCDATADIR="$HOME/DockerData"
 fi
 
 if [ -z "$DCDEVDIR" ]
@@ -28,9 +28,14 @@ else
     mkdir "$outdir"
 fi
 
-dstr="docker exec -it influxdb influxd backup -portable /home/influxbackups"
+bstr="docker exec -it influxdb influxd backup -portable /home/influxbackups"
+rstr="docker exec -it --rm -v $DCDATADIR/influxdb:/var/lib/influxdb -v $outdir:/home/influxbackups influxdb:$INFLUXDB_VERSION-alpine influxd restore -portable /home/influxbackups"
 
-echo "Copy and run this command:"
+echo "Copy and run this command to BACKUP; influxdb container should be running!"
 echo ""
-echo "$dstr"
+echo "$bstr"
+echo ""
+echo "Copy and run this command to RESTORE; influxdb container should NOT be running!"
+echo ""
+echo "$rstr"
 echo ""
