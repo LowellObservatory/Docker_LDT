@@ -29,7 +29,7 @@ else
 fi
 
 bstr="docker exec -it influxdb influxd backup -portable /home/influxbackups"
-rstr="docker run --rm --entrypoint /bin/bash -v $DCDEVDIR/DCTStack/config/influxdb.conf:/etc/influxdb/influxdb.conf -v $DCDATADIR/influxdb:/var/lib/influxdb -v $outdir:/home/influxbackups influxdb:$INFLUXDB_VERSION-alpine influxd restore -portable /home/influxbackups"
+rstr="docker run --rm --entrypoint /bin/bash -v $DCDEVDIR/config/influxdb.conf:/etc/influxdb/influxdb.conf -v $DCDATADIR/influxdb:/var/lib/influxdb -v $outdir:/home/influxbackups influxdb:$INFLUXDB_VERSION-alpine influxd restore -portable /home/influxbackups"
 
 echo "Copy and run this command to BACKUP; influxdb container should be running!"
 echo ""
