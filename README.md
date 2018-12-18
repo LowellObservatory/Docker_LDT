@@ -21,4 +21,7 @@ and docker-compose (v3) at the moment.
 ## NightWatch
 - Apache + PHP
     - Basic networking tools (rsync, wget)
+- Camelot prototypes 
+    - GOES-16 reprojection
+    - Webcam images
 - django, bokeh
