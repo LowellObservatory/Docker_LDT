@@ -16,6 +16,7 @@ services:
     command: ["python", "camLooper.py"]
     networks:
       - default
+    restart: always
 
   goesmcgoesface:
     build:
@@ -34,6 +35,7 @@ services:
     command: ["python", "goes16aws_looper.py"]
     networks:
       - default
+    restart: always
 
   apachephp:
     build:
@@ -49,6 +51,7 @@ services:
       - 8080:80
     networks:
       - default
+    restart: always
     volumes:
       - ./httpdOpts.conf:/etc/apache2/sites-enabled/000-default.conf
       - ${DCDATADIR}/goesmcgoesface/:/var/www/html/goes16
