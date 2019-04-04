@@ -43,7 +43,7 @@ services:
       dockerfile: 'webStackDockerfile'
       args:
         - php_version=${PHP_VERSION}
-    container_name: 'NightWatchWeb'
+    container_name: 'nightwatchweb'
     depends_on:
       - "goesmcgoesface"
       - "webcammcwebcamface"
