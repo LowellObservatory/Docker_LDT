@@ -1,8 +1,8 @@
 version: '3'
 services:
  omsa:
-    container_name: omsa82
-    image: jdelaros1/openmanage
+    container_name: omsa84
+    image: jdelaros1/dell-omsa84
     ports:
      - 1311:1311
     network_mode: "host"
