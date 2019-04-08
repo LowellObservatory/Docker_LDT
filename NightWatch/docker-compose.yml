@@ -55,7 +55,7 @@ services:
     volumes:
       - ./httpdOpts.conf:/etc/apache2/sites-enabled/000-default.conf
       - ${DCDATADIR}/goesmcgoesface/:/var/www/html/goes16
-      - ${DCDATADIR}/webcammcwebcamface/:/var/www/html/dctwebcams
+      - ${DCDATADIR}/webcammcwebcamface/:/var/www/html/webcams
 
 networks:
   default:
