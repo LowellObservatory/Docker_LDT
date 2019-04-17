@@ -10,3 +10,6 @@
 [submodule "NightWatch/Camelot"]
 	path = NightWatch/Camelot
 	url = https://github.com/LowellObservatory/Camelot
+[submodule "NightWatch/NightWatch"]
+	path = NightWatch/NightWatch
+	url = https://github.com/LowellObservatory/NightWatch.git
