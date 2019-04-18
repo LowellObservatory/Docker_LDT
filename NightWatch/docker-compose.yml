@@ -37,25 +37,22 @@ services:
       - default
     restart: always
 
-  apachephp:
+  djangostack:
     build:
       context: '.'
       dockerfile: 'webStackDockerfile'
-      args:
-        - php_version=${PHP_VERSION}
-    container_name: 'nightwatchweb'
+    container_name: 'djangostack'
     depends_on:
       - "goesmcgoesface"
       - "webcammcwebcamface"
     ports:
-      - 8080:80
+      - 9876:8113
     networks:
       - default
     restart: always
     volumes:
-      - ./httpdOpts.conf:/etc/apache2/sites-enabled/000-default.conf
-      - ${DCDATADIR}/goesmcgoesface/:/var/www/html/goes16
-      - ${DCDATADIR}/webcammcwebcamface/:/var/www/html/webcams
+      - ${DCDATADIR}/goesmcgoesface/:/home/djdock/goes16
+      - ${DCDATADIR}/webcammcwebcamface/:/home/djdock/webcams
 
 networks:
   default:

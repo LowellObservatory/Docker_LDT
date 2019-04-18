@@ -1,11 +1,76 @@
-ARG php_version="7.2-apache-stretch"
+# Copyright 2013 Thatcher Peskens
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# 
+# Cloned from https://github.com/Koff/alpine-python3-django-uwsgi-nginx
+# commit ead32605ce7a8ee42feae9b333f3c5a0bb0195a5
 
-FROM php:${php_version}
+FROM alpine:latest
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y vim rsync wget
+# Install required packages and remove the apt packages cache when done.
+#apk update && apk upgrade && \
+RUN apk update 
+RUN apk add bash \
+	git \
+	openssh \
+	python3 \
+	python3-dev \
+	gcc \
+	build-base \
+	linux-headers \
+	pcre-dev \
+	postgresql-dev \
+	musl-dev \
+	libxml2-dev \
+	libxslt-dev \
+	nginx \
+	curl \
+	supervisor && \
+	python3 -m ensurepip && \
+    rm -r /usr/lib/python*/ensurepip && \
+    pip3 install --upgrade pip setuptools && \
+    rm -r /root/.cache && \
+    pip3 install --upgrade pip setuptools && \
+    rm -r /root/.cache
 
-# Use the default production configuration
-RUN mv $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
+# install uwsgi now because it takes a little while
+RUN pip3 install uwsgi
 
-# Override with custom opcache settings
-#COPY config/opcache.ini $PHP_INI_DIR/conf.d/
+# COPY requirements.txt and RUN pip install BEFORE adding the rest of your
+# code, this will cause Docker's caching mechanism to prevent re-installing
+# (all your) dependencies when you made a change a line or two in your app.
+WORKDIR /home/djdock/
+RUN mkdir -p nightwatch/
+
+#                  (local)                          (container)
+COPY NightWatch/nightwatch/requirements.txt /home/djdock/nightwatch/ 
+
+RUN pip3 install -r /home/djdock/nightwatch/requirements.txt
+
+# Now add in the small configfiles. Could bind these to skip this step.
+COPY config/nginx.conf /etc/nginx/nginx.conf 
+COPY config/nginx-app.conf /etc/nginx/sites-available/default 
+COPY config/supervisor-app.conf /etc/supervisor/conf.d/
+
+COPY config/uwsgi_params /home/djdock/
+COPY config/uwsgi.ini /home/djdock/
+
+# add (the rest of) our code. Could also bind this in if we're careful
+COPY NightWatch/nightwatch /home/djdock/nightwatch/
+
+WORKDIR /home/djdock/nightwatch
+RUN python3 manage.py collectstatic
+
+WORKDIR /home/djdock/
+EXPOSE 8113
+CMD ["supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisor-app.conf"]
