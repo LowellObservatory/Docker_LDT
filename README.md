@@ -19,9 +19,11 @@ and docker-compose (v3) at the moment.
 - jekyll
 
 ## NightWatch
-- Apache + PHP
-    - Basic networking tools (rsync, wget)
+- webStack
+    - django
+    - uWSGI
+    - supervisord
 - Camelot prototypes 
     - GOES-16 reprojection
     - Webcam images
-- django, bokeh
+- TBD
