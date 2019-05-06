@@ -151,6 +151,21 @@ services:
     user: ${DCUSERID}:${DCGRPID}
     restart: always
 
+  abu:
+    image: 'pytest'
+    container_name: 'abu'
+    volumes:
+      - ${DCDEVDIR}/config/:/home/lig/conf
+      - ${DCDATADIR}/logs/lig:/home/lig/logs
+    depends_on:
+      - 'influxdb'
+    working_dir: /home/lig/Codes/DataServants/
+    command: ["python", "Abu.py", "-l", "/home/lig/logs/abu.log", "-c", "/home/lig/conf/abu.conf", "-p", "/home/lig/conf/passwords.conf", "--debug"]
+    networks:
+      - default
+    user: ${DCUSERID}:${DCGRPID}
+    restart: always
+
 networks:
     default:
         driver: bridge

@@ -1,5 +1,6 @@
 *.swp
 *.env
+abu.conf
 iago.conf
 mandos.conf
 alfred.conf
@@ -22,4 +23,4 @@ vendor
 serviceTable.md
 alfred_extraPings.conf
 influxbackupdump
-NightWatch/config
+NightWatch/config/

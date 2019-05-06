@@ -35,6 +35,8 @@ RUN apk add bash \
 	libxslt-dev \
 	nginx \
 	curl \
+        jpeg-dev \
+        zlib-dev \
 	supervisor && \
 	python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
@@ -45,6 +47,9 @@ RUN apk add bash \
 
 # install uwsgi now because it takes a little while
 RUN pip3 install uwsgi
+
+# We need bokeh, because we get the plots over its servers' websocket
+RUN pip3 install bokeh
 
 # COPY requirements.txt and RUN pip install BEFORE adding the rest of your
 # code, this will cause Docker's caching mechanism to prevent re-installing

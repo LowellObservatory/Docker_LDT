@@ -37,6 +37,26 @@ services:
       - default
     restart: always
 
+  bokehmcbokehface:
+    build:
+      context: './Camelot/BokehMcBokehface/'
+      dockerfile: 'Dockerfile'
+    container_name: 'bokehmcbokehface'
+    depends_on:
+#      - "apachephp"
+      - "webcammcwebcamface"
+    volumes:
+      - ${DCDATADIR}/logs/bokehmcbokehface/:/home/lig/Codes/BokehMcBokehface/logs/
+      - ${DCDEVDIR}/config/dbqueries.conf:/home/lig/Codes/BokehMcBokehface/config/dbqueries.conf
+      - ${DCDEVDIR}/config/modules.conf:/home/lig/Codes/BokehMcBokehface/config/modules.conf
+    working_dir: /home/lig/Codes/BokehMcBokehface/
+    command: ["python", "serve.py"]
+    ports:
+      - 5000:5000
+    networks:
+      - default
+    restart: always
+
   djangostack:
     build:
       context: '.'
