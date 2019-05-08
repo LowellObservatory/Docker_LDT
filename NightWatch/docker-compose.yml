@@ -6,8 +6,6 @@ services:
       context: './Camelot/WebcamMcWebcamface'
       dockerfile: 'Dockerfile'
     container_name: 'webcammcwebcamface'
-#    depends_on:
-#      - "apachephp"
     volumes:
       - ${DCDATADIR}/logs/webcammcwebcamface:/home/lig/Codes/WebcamMcWebcamface/logs/
       - ${DCDATADIR}/webcammcwebcamface:/home/lig/Codes/WebcamMcWebcamface/images/
@@ -24,7 +22,6 @@ services:
       dockerfile: 'Dockerfile'
     container_name: 'goesmcgoesface'
     depends_on:
-#      - "apachephp"
       - "webcammcwebcamface"
     volumes:
       - ${DCDATADIR}/logs/goesmcgoesface/:/home/lig/Codes/GOESMcGOESface/logs/
@@ -43,13 +40,16 @@ services:
       dockerfile: 'Dockerfile'
     container_name: 'bokehmcbokehface'
     depends_on:
-#      - "apachephp"
       - "webcammcwebcamface"
     volumes:
       - ${DCDATADIR}/logs/bokehmcbokehface/:/home/lig/Codes/BokehMcBokehface/logs/
       - ${DCDEVDIR}/config/dbqueries.conf:/home/lig/Codes/BokehMcBokehface/config/dbqueries.conf
       - ${DCDEVDIR}/config/modules.conf:/home/lig/Codes/BokehMcBokehface/config/modules.conf
     working_dir: /home/lig/Codes/BokehMcBokehface/
+    environment:
+      - BOKEH_LOG_LEVEL=debug
+      - BOKEH_PY_LOG_LEVEL=debug
+      - BOKEH_PRETTY=true
     command: ["python", "serve.py"]
     ports:
       - 5000:5000
@@ -65,6 +65,7 @@ services:
     depends_on:
       - "goesmcgoesface"
       - "webcammcwebcamface"
+      - "bokehmcbokehface"
     ports:
       - 9876:8113
     networks:
