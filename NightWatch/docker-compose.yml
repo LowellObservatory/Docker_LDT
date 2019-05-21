@@ -34,6 +34,24 @@ services:
       - default
     restart: always
 
+  radarlove:
+    build:
+      context: './Camelot/RadarLove/'
+      dockerfile: 'Dockerfile'
+    container_name: 'radarlove'
+    depends_on:
+      - "webcammcwebcamface"
+    volumes:
+      - ${DCDATADIR}/logs/radarlove/:/home/lig/Codes/RadarLove/logs/
+      - ${DCDATADIR}/radarlove/:/home/lig/Codes/RadarLove/outputs/
+      - ${DCDATADIR}/goesmcgoesface/cartopy:/home/lig/.local/share/cartopy/
+      - ${DCDEVDIR}/config/awsCreds.conf:/home/lig/Codes/RadarLove/awsCreds.conf
+    working_dir: /home/lig/Codes/RadarLove/
+    command: ["python", "nexradaws_looper.py"]
+    networks:
+      - default
+    restart: always
+
   bokehmcbokehface:
     build:
       context: './Camelot/BokehMcBokehface/'

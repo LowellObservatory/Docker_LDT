@@ -15,7 +15,7 @@ export PHP_VERSION="7.2-apache-stretch"
 
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories
-services=("apachephp" "goesmcgoesface" "webcammcwebcamface" "bokehmcbokehface")
+services=("apachephp" "goesmcgoesface" "webcammcwebcamface" "bokehmcbokehface" "radarlove")
 
 # NO COMMAS!!!
 #   This list is for extra data dirs that I can't figure out
