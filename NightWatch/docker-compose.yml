@@ -81,6 +81,7 @@ services:
       dockerfile: 'webStackDockerfile'
     container_name: 'djangostack'
     depends_on:
+      - "radarlove"
       - "goesmcgoesface"
       - "webcammcwebcamface"
       - "bokehmcbokehface"
@@ -90,6 +91,7 @@ services:
       - default
     restart: always
     volumes:
+      - ${DCDATADIR}/radarlove/:/home/djdock/nexrad
       - ${DCDATADIR}/goesmcgoesface/:/home/djdock/goes16
       - ${DCDATADIR}/webcammcwebcamface/:/home/djdock/webcams
 
