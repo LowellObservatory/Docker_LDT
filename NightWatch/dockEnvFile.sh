@@ -7,20 +7,14 @@
 #   Created by RTH 
 #     2018/10/09
 
-# Desired component versions, hardcoded for production & stability.
-#   These should match the tags in the relevant docker hub pages.
-#   Use a PHP version already bundled with apache because it's easier.
-#   Also use the longer tag so it's clear what distribution is at the base
-export PHP_VERSION="7.2-apache-stretch"
-
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories
-services=("apachephp" "goesmcgoesface" "webcammcwebcamface" "bokehmcbokehface" "radarlove")
+services=("goes" "webcams" "bokehdctplots" "radar")
 
 # NO COMMAS!!!
 #   This list is for extra data dirs that I can't figure out
 #   how to check in a more automated/nice fashion.
-extraddirs=("goesmcgoesface/cartopy" "goesmcgoesface/raws" "goesmcgoesface/nows" "goesmcgoesface/pngs" "radarlove/raws" "radarlove/nows" "radarlove/pngs")
+extraddirs=("goes/cartopy" "goes/raws" "goes/nows" "goes/pngs" "radar/raws" "radar/nows" "radar/pngs")
 
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.
@@ -42,8 +36,6 @@ echo "DCGRPID=$DCGRPID" >> .env
 echo "DCDOCKERID=$DCDOCKERID" >> .env
 echo "DCDATADIR=$DOCKDATADIR" >> .env
 echo "DCDEVDIR=$DOCKDEVDIR" >> .env
-echo "# Component versions to use" >> .env
-echo "PHP_VERSION=$PHP_VERSION" >> .env
 
 echo "./.env contents:"
 echo "==========="

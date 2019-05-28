@@ -13,3 +13,6 @@
 [submodule "NightWatch/NightWatch"]
 	path = NightWatch/NightWatch
 	url = https://github.com/LowellObservatory/NightWatch.git
+[submodule "NightWatch/NightShift"]
+	path = NightWatch/NightShift
+	url = https://github.com/LowellObservatory/NightShift.git

@@ -1,74 +1,74 @@
 version: '3'
 
 services:
-  webcammcwebcamface:
+  webcams:
     build:
-      context: './Camelot/WebcamMcWebcamface'
-      dockerfile: 'Dockerfile'
-    container_name: 'webcammcwebcamface'
+      context: './NightShift/dockerfiles'
+      dockerfile: 'webcamsDockerfile'
+    container_name: 'webcams'
     volumes:
-      - ${DCDATADIR}/logs/webcammcwebcamface:/home/lig/Codes/WebcamMcWebcamface/logs/
-      - ${DCDATADIR}/webcammcwebcamface:/home/lig/Codes/WebcamMcWebcamface/images/
-      - ${DCDEVDIR}/config/webcams.conf:/home/lig/Codes/WebcamMcWebcamface/webcams.conf
-    working_dir: /home/lig/Codes/WebcamMcWebcamface
-    command: ["python", "camLooper.py"]
+      - ${DCDATADIR}/logs/webcams:/home/lig/Codes/NightShift/outputs/logs/
+      - ${DCDATADIR}/webcams:/home/lig/Codes/NightShift/outputs/images/
+      - ${DCDEVDIR}/config/webcams.conf:/home/lig/Codes/NightShift/config/webcams.conf
+    working_dir: /home/lig/Codes/NightShift
+    command: ["python", "looper_webcams.py"]
     networks:
       - default
     restart: always
 
-  goesmcgoesface:
+  goes:
     build:
-      context: './Camelot/GOESMcGOESface/'
-      dockerfile: 'Dockerfile'
-    container_name: 'goesmcgoesface'
+      context: './NightShift/dockerfiles/'
+      dockerfile: 'goesDockerfile'
+    container_name: 'goes'
     depends_on:
-      - "webcammcwebcamface"
+      - "webcams"
     volumes:
-      - ${DCDATADIR}/logs/goesmcgoesface/:/home/lig/Codes/GOESMcGOESface/logs/
-      - ${DCDATADIR}/goesmcgoesface/:/home/lig/Codes/GOESMcGOESface/outputs/
-      - ${DCDATADIR}/goesmcgoesface/cartopy:/home/lig/.local/share/cartopy/
-      - ${DCDEVDIR}/config/awsCreds.conf:/home/lig/Codes/GOESMcGOESface/awsCreds.conf
-    working_dir: /home/lig/Codes/GOESMcGOESface/
-    command: ["python", "goes16aws_looper.py"]
+      - ${DCDATADIR}/logs/goes/:/home/lig/Codes/NightShift/outputs/logs/
+      - ${DCDATADIR}/goes/:/home/lig/Codes/NightShift/outputs/goes/
+      - ${DCDATADIR}/goes/cartopy:/home/lig/.local/share/cartopy/
+      - ${DCDEVDIR}/config/awsCreds.conf:/home/lig/Codes/NightShift/config/awsCreds.conf
+    working_dir: /home/lig/Codes/NightShift/
+    command: ["python", "looper_goes16aws.py"]
     networks:
       - default
     restart: always
 
-  radarlove:
+  radar:
     build:
-      context: './Camelot/RadarLove/'
-      dockerfile: 'Dockerfile'
-    container_name: 'radarlove'
+      context: './NightShift/dockerfiles/'
+      dockerfile: 'radarDockerfile'
+    container_name: 'radar'
     depends_on:
-      - "webcammcwebcamface"
+      - "webcams"
     volumes:
-      - ${DCDATADIR}/logs/radarlove/:/home/lig/Codes/RadarLove/logs/
-      - ${DCDATADIR}/radarlove/:/home/lig/Codes/RadarLove/outputs/
-      - ${DCDATADIR}/goesmcgoesface/cartopy:/home/lig/.local/share/cartopy/
-      - ${DCDEVDIR}/config/awsCreds.conf:/home/lig/Codes/RadarLove/awsCreds.conf
-    working_dir: /home/lig/Codes/RadarLove/
-    command: ["python", "nexradaws_looper.py"]
+      - ${DCDATADIR}/logs/radar/:/home/lig/Codes/NightShift/outputs/logs/
+      - ${DCDATADIR}/radar/:/home/lig/Codes/NightShift/outputs/radar/
+      - ${DCDATADIR}/goes/cartopy:/home/lig/.local/share/cartopy/
+      - ${DCDEVDIR}/config/awsCreds.conf:/home/lig/Codes/NightShift/config/awsCreds.conf
+    working_dir: /home/lig/Codes/NightShift/
+    command: ["python", "looper_nexradaws.py"]
     networks:
       - default
     restart: always
 
-  bokehmcbokehface:
+  bokehdctplots:
     build:
-      context: './Camelot/BokehMcBokehface/'
-      dockerfile: 'Dockerfile'
-    container_name: 'bokehmcbokehface'
+      context: './NightShift/dockerfiles/'
+      dockerfile: 'bokehDockerfile'
+    container_name: 'bokehdctplots'
     depends_on:
-      - "webcammcwebcamface"
+      - "webcams"
     volumes:
-      - ${DCDATADIR}/logs/bokehmcbokehface/:/home/lig/Codes/BokehMcBokehface/logs/
-      - ${DCDEVDIR}/config/dbqueries.conf:/home/lig/Codes/BokehMcBokehface/config/dbqueries.conf
-      - ${DCDEVDIR}/config/modules.conf:/home/lig/Codes/BokehMcBokehface/config/modules.conf
-    working_dir: /home/lig/Codes/BokehMcBokehface/
+      - ${DCDATADIR}/logs/bokehdctplots/:/home/lig/Codes/NightShift/outputs/logs/
+      - ${DCDEVDIR}/config/dbqueries.conf:/home/lig/Codes/NightShift/config/dbqueries.conf
+      - ${DCDEVDIR}/config/modules.conf:/home/lig/Codes/NightShift/config/modules.conf
+    working_dir: /home/lig/Codes/NightShift/
     environment:
       - BOKEH_LOG_LEVEL=debug
       - BOKEH_PY_LOG_LEVEL=debug
       - BOKEH_PRETTY=true
-    command: ["python", "serve.py"]
+    command: ["python", "server_bokeh_dctplots.py"]
     ports:
       - 5000:5000
     networks:
@@ -81,19 +81,19 @@ services:
       dockerfile: 'webStackDockerfile'
     container_name: 'djangostack'
     depends_on:
-      - "radarlove"
-      - "goesmcgoesface"
-      - "webcammcwebcamface"
-      - "bokehmcbokehface"
+      - "radar"
+      - "goes"
+      - "webcams"
+      - "bokehdctplots"
     ports:
       - 9876:8113
     networks:
       - default
     restart: always
     volumes:
-      - ${DCDATADIR}/radarlove/:/home/djdock/nexrad
-      - ${DCDATADIR}/goesmcgoesface/:/home/djdock/goes16
-      - ${DCDATADIR}/webcammcwebcamface/:/home/djdock/webcams
+      - ${DCDATADIR}/radar/:/home/djdock/nexrad
+      - ${DCDATADIR}/goes/:/home/djdock/goes16
+      - ${DCDATADIR}/webcams/:/home/djdock/webcams
 
 networks:
   default:
