@@ -29,6 +29,8 @@ services:
   influxdb:
     image: 'influxdb:${INFLUXDB_VERSION}-alpine'
     container_name: 'influxdb'
+    environment:
+      INFLUXDB_LOGGING_LEVEL: debug
     ports: 
       - 8086:8086
       - 8088:8088

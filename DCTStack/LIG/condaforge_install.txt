@@ -1,2 +1,2 @@
-pyresample
+pyresample=1.12.1
 imageio
