@@ -13,3 +13,6 @@
 [submodule "NightWatch/NightShift"]
 	path = NightWatch/NightShift
 	url = https://github.com/LowellObservatory/NightShift.git
+[submodule "MrFreeze/MrFreeze"]
+	path = MrFreeze/MrFreeze
+	url = https://github.com/LowellObservatory/MrFreeze
