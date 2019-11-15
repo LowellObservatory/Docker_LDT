@@ -49,6 +49,7 @@ RUN apk add bash \
 RUN pip3 install uwsgi
 
 # We need bokeh, because we get the plots over its servers' websocket
+#   Unfortunately it'll take a little while to build
 RUN pip3 install bokeh
 
 # COPY requirements.txt and RUN pip install BEFORE adding the rest of your

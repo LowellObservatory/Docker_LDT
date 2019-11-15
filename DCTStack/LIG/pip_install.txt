@@ -11,3 +11,5 @@ pysnmp
 pyephem
 bs4
 pytz
+schedule
+memory_profiler

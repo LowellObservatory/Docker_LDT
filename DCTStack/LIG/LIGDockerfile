@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3
+FROM continuumio/miniconda3:4.7.12
 
 ARG userid="31415"
 ARG groupid="31415"
@@ -23,7 +23,8 @@ COPY --chown=lig:lig condaforge_install.txt ./
 COPY --chown=lig:lig pip_install.txt ./
 
 # One layer each for the conda and pip installs
-RUN conda update -n base conda && conda install -c conda-forge pip && conda install -y --file conda_install.txt
+#RUN conda update -n base conda && conda install -c conda-forge pip && conda install -y --file conda_install.txt
+RUN conda install -y --file conda_install.txt
 RUN conda install -c conda-forge --file condaforge_install.txt
 RUN pip install --no-cache-dir -r pip_install.txt
 
@@ -39,7 +40,6 @@ RUN mkdir conf && mkdir logs && mkdir Codes
 
 WORKDIR /home/lig/Codes/
 COPY --chown=lig:lig ./ligmos ./ligmos
-COPY --chown=lig:lig ./MrFreeze ./MrFreeze
 COPY --chown=lig:lig ./DataServants ./DataServants
 
 # Install the ligmos library, for all users

@@ -10,6 +10,7 @@ services:
       - ${DCDATADIR}/logs/webcams:/home/lig/Codes/NightShift/outputs/logs/
       - ${DCDATADIR}/webcams:/home/lig/Codes/NightShift/outputs/images/
       - ${DCDEVDIR}/config/webcams.conf:/home/lig/Codes/NightShift/config/webcams.conf
+      - ${DCDEVDIR}/config/passwords.conf:/home/lig/Codes/NightShift/config/passwords.conf
     working_dir: /home/lig/Codes/NightShift
     command: ["python", "looper_webcams.py"]
     networks:
@@ -63,6 +64,7 @@ services:
       - ${DCDATADIR}/logs/bokehdctplots/:/home/lig/Codes/NightShift/outputs/logs/
       - ${DCDEVDIR}/config/dbqueries.conf:/home/lig/Codes/NightShift/config/dbqueries.conf
       - ${DCDEVDIR}/config/modules.conf:/home/lig/Codes/NightShift/config/modules.conf
+      - ${DCDEVDIR}/config/passwords.conf:/home/lig/Codes/NightShift/config/passwords.conf
     working_dir: /home/lig/Codes/NightShift/
     environment:
       - BOKEH_LOG_LEVEL=debug
