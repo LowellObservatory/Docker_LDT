@@ -12,8 +12,8 @@ services:
     privileged: true
     volumes:
      - "/lib/modules:/lib/modules:ro"
- nginx:
-    container_name: nginx
+ nginx-frontline:
+    container_name: nginx-frontline
     image: nginx:stable-alpine
     ports:
      - 80:80
@@ -47,19 +47,3 @@ services:
     command: -H unix:///var/run/docker.sock
     restart: always
 
-# gitlab:
-#    image: gitlab/gitlab-ce:11.4.0-ce.0
-#    container_name: gitlab
-#    hostname: dctsleeperservice
-#    environment:
-#      GITLAB_OMNIBUS_CONFIG: |
-#        gitlab_rails['gitlab_shell_ssh_port'] = 8822
-#    ports:
-#      - "443:443"
-#      - "8880:80"
-#      - "8822:22"
-#    volumes:
-#      - ./gitlab-logs:/var/log/gitlab
-#      - ./gitlab-config:/etc/gitlab
-#      - ./gitlab-data:/var/opt/gitlab
-#    restart: always

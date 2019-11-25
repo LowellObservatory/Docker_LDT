@@ -1,31 +1,6 @@
 version: '3'
 
 services:
-  activemq:
-#    build:
-#      context: '.'
-#      dockerfile: 'activemqDockerfile'
-#      args:
-#        - version=${ACTIVEMQ_VERSION}
-#        - userid=${DCUSERID}
-#        - groupid=${DCGRPID}
-#        - dockergid=${DCDOCKERID}
-#    image: 'activemq/activemquserland:${ACTIVEMQ_VERSION}-alpine'
-#    container_name: 'activemq'
-
-    image: 'rmohr/activemq:5.15.4-alpine'
-    container_name: 'activemq'
-    ports: 
-      - 1883:1883
-      - 8161:8161
-      - 61613:61613
-      - 61616:61616
-    volumes:
-      - ${DCDEVDIR}/config/activemq.xml:/opt/apache-activemq-5.15.4/conf/activemq.xml:ro
-    networks:
-      - default
-    restart: always
-
   influxdb:
     image: 'influxdb:${INFLUXDB_VERSION}-alpine'
     container_name: 'influxdb'
@@ -98,6 +73,7 @@ services:
       dockerfile: 'grafanaDockerfile'
       args:
         - GRAFANA_VERSION=${GRAFANA_VERSION}
+        - GF_INSTALL_IMAGE_RENDERER_PLUGIN=true
         - GF_PLUGIN_NEWPATH=/home/grafana/plugins/
         - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,natel-discrete-panel,vonage-status-panel,fetzerch-sunandmoon-datasource,ryantxu-ajax-panel,jdbranham-diagram-panel,natel-plotly-panel,fatcloud-windrose-panel,michaeldmoore-annunciator-panel,blackmirror1-statusbygroup-panel,natel-influx-admin-panel,grafana-image-renderer
     image: 'grafana/grafana:${GRAFANA_VERSION}_wplugs'
@@ -130,7 +106,6 @@ services:
       - ${DCDATADIR}/logs/lig:/home/lig/logs
     depends_on:
       - 'influxdb'
-      - 'activemq'
     working_dir: /home/lig/Codes/DataServants/
     command: ["python", "Iago.py", "-l", "/home/lig/logs/iago.log", "-c", "/home/lig/conf/iago.conf", "-p", "/home/lig/conf/passwords.conf", "--debug"]
     networks:
