@@ -11,7 +11,13 @@ and docker-compose (v3) at the moment.
 - Lowell Specific Utilities
     - ligmos
     - DataServants
+        - Abu
+        - Alfred
+        - Iago
+        - (coming soon) Mandos
     - Mr. Freeze
+        - Nora
+        - (coming soon) Victor
 
 ## sysTools
 - Portainer
