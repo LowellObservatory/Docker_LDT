@@ -7,23 +7,27 @@ and docker-compose (v3) at the moment.
 - InfluxDB
 - Chronograf
 - Grafana
-- ActiveMQ
+- ~~ActiveMQ~~ (removed)
 - Lowell Specific Utilities
     - ligmos
     - DataServants
-    - (coming soon) Lowell Mr. Freeze
+    - Mr. Freeze
 
 ## sysTools
+- Portainer
 - Dell OpenManage Server Administrator, v8.2
 - nginx (for DNS CNAME routing)
 - jekyll
 
 ## NightWatch
 - webStack
-    - django
-    - uWSGI
     - supervisord
-- Camelot prototypes 
+        - nginx 
+        - django
+        - uWSGI
+        - bokeh (just for socket connections)
+    - bokeh
+- NightShift 
     - GOES-16 reprojection
-    - Webcam images
-- TBD
+    - NEXRAD Radar processing
+    - Webcam image grabber
