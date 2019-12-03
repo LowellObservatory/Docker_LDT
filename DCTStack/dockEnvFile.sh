@@ -8,14 +8,11 @@
 #     2018/08/22
 
 # Desired component versions, hardcoded for production & stability
-export TELEGRAF_VERSION="1.12.5"
-export INFLUXDB_VERSION="1.7.9"
-export CHRONOGRAF_VERSION="1.7.14"
-export GRAFANA_VERSION="6.5.0"
+#export GRAFANA_VERSION="6.5.1"
 
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories
-services=("chronograf" "grafana" "influxdb" "telegraf" "lig")
+services=("lig")
 
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.
@@ -38,10 +35,7 @@ echo "DCDOCKERID=$DCDOCKERID" >> .env
 echo "DCDATADIR=$DOCKDATADIR" >> .env
 echo "DCDEVDIR=$DOCKDEVDIR" >> .env
 echo "# Component versions to use" >> .env
-echo "TELEGRAF_VERSION=$TELEGRAF_VERSION" >> .env
-echo "INFLUXDB_VERSION=$INFLUXDB_VERSION" >> .env
-echo "CHRONOGRAF_VERSION=$CHRONOGRAF_VERSION" >> .env
-echo "GRAFANA_VERSION=$GRAFANA_VERSION" >> .env
+#echo "GRAFANA_VERSION=$GRAFANA_VERSION" >> .env
 
 echo "./.env contents:"
 echo "==========="
@@ -95,15 +89,6 @@ do
     fi
 
 done
-
-backdir="$DOCKDEVDIR/influxbackupdump"
-if [ -d "$backdir" ]; then
-    echo "$backdir is good!"
-else
-    echo "$backdir is nogood!"
-    mkdir "$backdir"
-    echo "...so I made it good."
-fi
 
 echo ""
 echo "========== NOTE =========="

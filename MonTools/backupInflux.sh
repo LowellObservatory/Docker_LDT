@@ -17,7 +17,7 @@ fi
 
 if [ -z "$DCDEVDIR" ]
 then
-    DCDEVDIR="$HOME/DockerDev/DCTStack/"
+    DCDEVDIR="$HOME/DockerDev/MonTools/"
 fi
 
 outdir="$DCDEVDIR/influxbackupdump"
