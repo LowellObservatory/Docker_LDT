@@ -1,0 +1,49 @@
+version: '3'
+services:
+ omsa:
+    container_name: omsa84
+    image: jdelaros1/dell-omsa84
+    ports:
+     - 1311:1311
+    network_mode: "host"
+    restart: always
+    cap_add:
+     - ALL
+    privileged: true
+    volumes:
+     - "/lib/modules:/lib/modules:ro"
+ nginx-frontline:
+    container_name: nginx-frontline
+    image: nginx:stable-alpine
+    ports:
+     - 80:80
+    network_mode: "host"
+    restart: always
+    volumes:
+     - $PWD/nginx_routing.conf:/etc/nginx/conf.d/default.conf
+ jekyll:
+    container_name: jekyll
+    command: jekyll serve
+    image: jekyll/jekyll:latest
+    volumes:
+      - $PWD/mainLandingPage/:/srv/jekyll
+      - ${DCDATADIR}/jekyll/:/usr/local/bundle
+    ports:
+     - 4000:4000
+    environment:
+     - JEKYLL_UID=${DCUSERID}
+     - JEKYLL_GID=${DCGRPID}
+    network_mode: "host"
+    restart: always
+ portainer:
+    container_name: portainer
+    image: portainer/portainer:${PORTAINER_VERSION}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DCDATADIR}/portainer:/data
+    ports:
+      - "9000:9000"
+    network_mode: "host"
+    command: -H unix:///var/run/docker.sock
+    restart: always
+
