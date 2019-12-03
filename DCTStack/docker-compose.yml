@@ -3,7 +3,7 @@ version: '3'
 services:
   iago:
     build:
-      context: './LIG/'
+      context: '.'
       dockerfile: LIGDockerfile
       args:
         - userid=${DCUSERID}
