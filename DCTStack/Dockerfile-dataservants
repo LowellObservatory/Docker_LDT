@@ -1,0 +1,10 @@
+FROM ligbase
+
+WORKDIR /home/lig/Codes/
+COPY --chown=lig:lig ./DataServants ./DataServants
+
+# Dump us into an iPython shell if there's no
+#   actual command issued to start a LIG code
+USER lig
+WORKDIR /home/lig/
+CMD ["ipython"]

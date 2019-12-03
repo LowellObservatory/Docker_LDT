@@ -4,17 +4,12 @@ services:
   iago:
     build:
       context: '.'
-      dockerfile: LIGDockerfile
-      args:
-        - userid=${DCUSERID}
-        - groupid=${DCGRPID}
-    image: 'pytest'
+      dockerfile: Dockerfile-dataservants
+    image: 'lig-dataservants'
     container_name: 'iago'
     volumes:
       - ${DCDEVDIR}/config/:/home/lig/conf
       - ${DCDATADIR}/logs/lig:/home/lig/logs
-        #    depends_on:
-        #      - 'influxdb'
     working_dir: /home/lig/Codes/DataServants/
     command: ["python", "Iago.py", "-l", "/home/lig/logs/iago.log", "-c", "/home/lig/conf/iago.conf", "-p", "/home/lig/conf/passwords.conf", "--debug"]
     networks:
@@ -23,13 +18,11 @@ services:
     restart: always
 
   alfred:
-    image: 'pytest'
+    image: 'lig-dataservants'
     container_name: 'alfred'
     volumes:
       - ${DCDEVDIR}/config/:/home/lig/conf
       - ${DCDATADIR}/logs/lig:/home/lig/logs
-        #    depends_on:
-        #      - 'influxdb'
     working_dir: /home/lig/Codes/DataServants/
     command: ["python", "Alfred.py", "-l", "/home/lig/logs/alfred.log", "-c", "/home/lig/conf/alfred.conf", "-p", "/home/lig/conf/passwords.conf", "--extraPings", "/home/lig/conf/alfred_extraPings.conf", "--debug"]
     networks:
@@ -38,7 +31,7 @@ services:
     restart: always
 
   abu:
-    image: 'pytest'
+    image: 'lig-dataservants'
     container_name: 'abu'
     volumes:
       - ${DCDEVDIR}/config/:/home/lig/conf

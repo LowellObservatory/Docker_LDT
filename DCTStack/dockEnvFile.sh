@@ -8,7 +8,7 @@
 #     2018/08/22
 
 # Desired component versions, hardcoded for production & stability
-#export GRAFANA_VERSION="6.5.1"
+export MINICONDA_VERSION="4.7.12"
 
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories
@@ -35,7 +35,7 @@ echo "DCDOCKERID=$DCDOCKERID" >> .env
 echo "DCDATADIR=$DOCKDATADIR" >> .env
 echo "DCDEVDIR=$DOCKDEVDIR" >> .env
 echo "# Component versions to use" >> .env
-#echo "GRAFANA_VERSION=$GRAFANA_VERSION" >> .env
+echo "MINICONDA_VERSION=$MINICONDA_VERSION" >> .env
 
 echo "./.env contents:"
 echo "==========="
