@@ -8,14 +8,11 @@ services:
       args:
         - userid=${DCUSERID}
         - groupid=${DCGRPID}
-    image: 'pytest'
+    image: 'mrfreeze_nora'
     container_name: 'mrfreeze_nora'
     volumes:
       - ${DCDEVDIR}/config/:/home/lig/conf
       - ${DCDATADIR}/logs/lig:/home/lig/logs
-#    depends_on:
-#      - 'influxdb'
-#      - 'activemq'
     working_dir: /home/lig/Codes/MrFreeze/
     command: ["python", "Nora.py", "-l", "/home/lig/logs/nora.log", "-c", "/home/lig/conf/mrfreeze.conf", "-p", "/home/lig/conf/passwords.conf", "--debug"]
     networks:

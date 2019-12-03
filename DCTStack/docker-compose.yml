@@ -5,7 +5,7 @@ services:
     build:
       context: '.'
       dockerfile: Dockerfile-dataservants
-    image: 'lig-dataservants'
+    image: 'dataservants'
     container_name: 'iago'
     volumes:
       - ${DCDEVDIR}/config/:/home/lig/conf
@@ -18,7 +18,7 @@ services:
     restart: always
 
   alfred:
-    image: 'lig-dataservants'
+    image: 'dataservants'
     container_name: 'alfred'
     volumes:
       - ${DCDEVDIR}/config/:/home/lig/conf
@@ -31,7 +31,7 @@ services:
     restart: always
 
   abu:
-    image: 'lig-dataservants'
+    image: 'dataservants'
     container_name: 'abu'
     volumes:
       - ${DCDEVDIR}/config/:/home/lig/conf
