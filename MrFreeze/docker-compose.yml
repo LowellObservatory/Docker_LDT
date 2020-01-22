@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   mrfreeze_nora:
@@ -22,4 +22,5 @@ services:
 
 networks:
     default:
-        driver: bridge
+        external: true
+        name: ligDockernetPub

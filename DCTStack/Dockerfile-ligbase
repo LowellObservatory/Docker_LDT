@@ -24,6 +24,25 @@ RUN conda install -y --file conda_install.txt
 RUN conda install -c conda-forge --file condaforge_install.txt
 RUN pip install --no-cache-dir -r pip_install.txt
 
+# Add in the SNMP stuff:
+#   Add the non-free repository first so we can get the nonfree MIBs
+#
+# Should find out a way to just get the debian release version automagically
+#
+RUN DEBIAN_RELEASE=buster && \
+    # Adding non-free repo for netperf
+    echo "deb http://deb.debian.org/debian ${DEBIAN_RELEASE} non-free" > \
+        /etc/apt/sources.list.d/debian-non-free.list && \
+    apt-get -qq update && \
+    apt-get -y install snmp libsnmp-dev snmp-mibs-downloader \
+                       libffi-dev smitools libsmi2-dev
+
+RUN pip install snimpy
+
+USER lig
+RUN mkdir /home/lig/.snmp && mkdir /home/lig/.snmp/mibs
+COPY --chown=lig:lig ./mibs/* /home/lig/.snmp/mibs/
+
 # At this point it's a minimal working LIG python image
 #   so copy in the LIG codes and get them going
 USER lig:lig

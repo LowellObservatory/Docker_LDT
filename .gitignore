@@ -26,3 +26,5 @@ influxbackupdump
 NightWatch/config/
 
 *.conf
+
+mibs/

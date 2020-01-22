@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   iago:
@@ -45,6 +45,23 @@ services:
     user: ${DCUSERID}:${DCGRPID}
     restart: always
 
+  radia:
+    image: 'dataservants'
+    container_name: 'radia'
+    volumes:
+      - ${DCDEVDIR}/config/:/home/lig/conf
+      - ${DCDATADIR}/logs/lig:/home/lig/logs
+        #    depends_on:
+        #      - 'influxdb'
+    working_dir: /home/lig/Codes/DataServants
+    command: ["python", "Radia.py", "-l", "/home/lig/logs/radia.log", "-c", "/home/lig/conf/radia.conf", "-p", "/home/lig/conf/passwords.conf", "--debug"]
+    networks:
+      - default
+    user: ${DCUSERID}:${DCGRPID}
+    restart: always
+
 networks:
     default:
-        driver: bridge
+        # This means that the network is/was created elsewhere (MonTools)
+        external: true
+        name: ligDockernetPub

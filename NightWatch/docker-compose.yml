@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   webcams:
@@ -99,4 +99,6 @@ services:
 
 networks:
   default:
-    driver: bridge
+      external: true
+      name: ligDockernetPub
+
