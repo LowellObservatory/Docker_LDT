@@ -6,7 +6,7 @@ layout: default
 
 {% include_relative serviceTable.md %}
 
-## Docker & DCT Software: An Outside Context Problem
+## Docker & LDT Software: An Outside Context Problem
 
 > The usual example given to illustrate an Outside Context Problem was
 > imagining you were a tribe on a largish, fertile island; you'd tamed the
