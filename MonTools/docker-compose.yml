@@ -60,6 +60,7 @@ services:
       - /etc:/rootfs/etc:ro
       - /var/run/utmp:/var/run/utmp
       - /var/run/docker.sock:/var/run/docker.sock
+      - ${DCDEVDIR}/mibs/:/home/telegraf/.snmp/mibs/
     depends_on:
       - 'influxdb'
     networks:

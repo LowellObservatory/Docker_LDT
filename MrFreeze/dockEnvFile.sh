@@ -22,7 +22,7 @@ DCUSERID=`getent passwd $USER | cut -d: -f3`
 DCGRPID=`getent passwd $USER | cut -d: -f4`
 DCDOCKERID=`getent group docker | cut -d: -f3`
 DOCKDATADIR="$HOME/DockerData/"
-DOCKDEVDIR="$HOME/DockerDev/MrFreeze/"
+DOCKDEVDIR="$HOME/Docker_LDT/MrFreeze/"
 
 # Now put it all into the .env file
 # Print a header so we know its vintage

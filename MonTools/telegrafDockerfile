@@ -18,3 +18,7 @@ RUN delgroup ping && \
     addgroup -g ${dockergid} docker && \
     addgroup telegraf docker && \
     addgroup -g 666 ping
+
+# Make snmp MIB directory for our additional MIBs
+
+RUN mkdir /home/telegraf/.snmp && mkdir /home/telegraf/.snmp/mibs/
