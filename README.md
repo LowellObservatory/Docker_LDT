@@ -1,6 +1,6 @@
-# DockerDev
-Repository of container files for Lowell codes, mostly using Docker 
-and docker-compose (v3) at the moment.
+# Docker_LDT
+Repository of container files for Lowell codes running out at the 
+4.3m Lowell Discovery Telescope.
 
 ## DCTStack
 - Telegraf
