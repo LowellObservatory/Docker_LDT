@@ -7,3 +7,9 @@
 [submodule "MrFreeze/MrFreeze"]
 	path = MrFreeze/MrFreeze
 	url = https://github.com/LowellObservatory/MrFreeze
+[submodule "LDTStack/DataServants"]
+	path = LDTStack/DataServants
+	url = https://github.com/LowellObservatory/DataServants
+[submodule "LDTStack/ligmos"]
+	path = LDTStack/ligmos
+	url = https://github.com/LowellObservatory/ligmos
