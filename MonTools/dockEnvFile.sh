@@ -8,10 +8,10 @@
 #     2018/08/22
 
 # Desired component versions, hardcoded for production & stability
-export TELEGRAF_VERSION="1.13.0"
-export INFLUXDB_VERSION="1.7.9"
-export CHRONOGRAF_VERSION="1.7.14"
-export GRAFANA_VERSION="6.5.2"
+export TELEGRAF_VERSION="1.13.4"
+export INFLUXDB_VERSION="1.7.10"
+export CHRONOGRAF_VERSION="1.8.0"
+export GRAFANA_VERSION="6.6.2"
 
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories

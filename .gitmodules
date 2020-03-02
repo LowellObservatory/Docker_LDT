@@ -1,9 +1,3 @@
-[submodule "DCTStack/LIG/DataServants"]
-	path = LDTStack/DataServants
-	url = https://github.com/LowellObservatory/DataServants
-[submodule "DCTStack/LIG/ligmos"]
-	path = LDTStack/ligmos
-	url = https://github.com/LowellObservatory/ligmos
 [submodule "NightWatch/NightWatch"]
 	path = NightWatch/NightWatch
 	url = https://github.com/LowellObservatory/NightWatch.git

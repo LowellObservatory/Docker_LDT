@@ -24,7 +24,7 @@ services:
       - ${DCDEVDIR}/config/:/home/lig/conf
       - ${DCDATADIR}/logs/lig:/home/lig/logs
     working_dir: /home/lig/Codes/DataServants/
-    command: ["python", "Alfred.py", "-l", "/home/lig/logs/alfred.log", "-c", "/home/lig/conf/alfred.conf", "-p", "/home/lig/conf/passwords.conf", "--extraPings", "/home/lig/conf/alfred_extraPings.conf", "--debug"]
+    command: ["python", "Alfred.py", "--fratricide", "-l", "/home/lig/logs/alfred.log", "-c", "/home/lig/conf/alfred.conf", "-p", "/home/lig/conf/passwords.conf", "--extraPings", "/home/lig/conf/alfred_extraPings.conf", "--debug"]
     networks:
       - default
     user: ${DCUSERID}:${DCGRPID}
@@ -36,8 +36,6 @@ services:
     volumes:
       - ${DCDEVDIR}/config/:/home/lig/conf
       - ${DCDATADIR}/logs/lig:/home/lig/logs
-        #    depends_on:
-        #      - 'influxdb'
     working_dir: /home/lig/Codes/DataServants/
     command: ["python", "Abu.py", "-l", "/home/lig/logs/abu.log", "-c", "/home/lig/conf/abu.conf", "-p", "/home/lig/conf/passwords.conf", "--debug"]
     networks:
@@ -51,14 +49,13 @@ services:
     volumes:
       - ${DCDEVDIR}/config/:/home/lig/conf
       - ${DCDATADIR}/logs/lig:/home/lig/logs
-        #    depends_on:
-        #      - 'influxdb'
     working_dir: /home/lig/Codes/DataServants
     command: ["python", "Radia.py", "-l", "/home/lig/logs/radia.log", "-c", "/home/lig/conf/radia.conf", "-p", "/home/lig/conf/passwords.conf", "--debug"]
     networks:
       - default
     user: ${DCUSERID}:${DCGRPID}
     restart: always
+
 
 networks:
     default:
