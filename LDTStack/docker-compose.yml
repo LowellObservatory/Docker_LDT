@@ -24,7 +24,7 @@ services:
       - ${DCDEVDIR}/config/:/home/lig/conf
       - ${DCDATADIR}/logs/lig:/home/lig/logs
     working_dir: /home/lig/Codes/DataServants/
-    command: ["python", "Alfred.py", "--fratricide", "-l", "/home/lig/logs/alfred.log", "-c", "/home/lig/conf/alfred.conf", "-p", "/home/lig/conf/passwords.conf", "--extraPings", "/home/lig/conf/alfred_extraPings.conf", "--debug"]
+    command: ["python", "Alfred.py", "-l", "/home/lig/logs/alfred.log", "-c", "/home/lig/conf/alfred.conf", "-p", "/home/lig/conf/passwords.conf", "--extraPings", "/home/lig/conf/alfred_extraPings.conf", "--debug"]
     networks:
       - default
     user: ${DCUSERID}:${DCGRPID}
