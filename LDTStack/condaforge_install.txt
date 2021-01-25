@@ -1,2 +1,3 @@
 pyresample=1.13.2
 imageio
+opencv

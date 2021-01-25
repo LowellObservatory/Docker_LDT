@@ -16,6 +16,9 @@ services:
       - default
     user: ${DCUSERID}:${DCGRPID}
     restart: always
+    dns:
+      - 10.11.131.100
+      - 10.10.100.32
 
   alfred:
     image: 'dataservants'
@@ -29,6 +32,9 @@ services:
       - default
     user: ${DCUSERID}:${DCGRPID}
     restart: always
+    dns:
+      - 10.11.131.100
+      - 10.10.100.32
 
   abu:
     image: 'dataservants'
@@ -42,19 +48,22 @@ services:
       - default
     user: ${DCUSERID}:${DCGRPID}
     restart: always
+    dns:
+      - 10.11.131.100
+      - 10.10.100.32
 
-  radia:
-    image: 'dataservants'
-    container_name: 'radia'
-    volumes:
-      - ${DCDEVDIR}/config/:/home/lig/conf
-      - ${DCDATADIR}/logs/lig:/home/lig/logs
-    working_dir: /home/lig/Codes/DataServants
-    command: ["python", "Radia.py", "-l", "/home/lig/logs/radia.log", "-c", "/home/lig/conf/radia.conf", "-p", "/home/lig/conf/passwords.conf", "--debug"]
-    networks:
-      - default
-    user: ${DCUSERID}:${DCGRPID}
-    restart: always
+    #  radia:
+    #    image: 'dataservants'
+    #    container_name: 'radia'
+    #    volumes:
+    #      - ${DCDEVDIR}/config/:/home/lig/conf
+    #      - ${DCDATADIR}/logs/lig:/home/lig/logs
+    #    working_dir: /home/lig/Codes/DataServants
+    #    command: ["python", "Radia.py", "-l", "/home/lig/logs/radia.log", "-c", "/home/lig/conf/radia.conf", "-p", "/home/lig/conf/passwords.conf", "--debug"]
+    #    networks:
+    #      - default
+    #    user: ${DCUSERID}:${DCGRPID}
+    #    restart: always
 
 
 networks:
