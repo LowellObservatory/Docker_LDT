@@ -14,7 +14,7 @@ services=("goes" "webcams" "bokehdctplots" "radar")
 # NO COMMAS!!!
 #   This list is for extra data dirs that I can't figure out
 #   how to check in a more automated/nice fashion.
-extraddirs=("goes/cartopy" "goes/raws" "goes/nows" "goes/pngs" "radar/raws" "radar/nows" "radar/pngs")
+extraddirs=("goes/cartopy" "goes/raws" "goes/nows" "goes/pngs" "radar/raws" "radar/nows" "radar/pngs" "webcams/archive")
 
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.
