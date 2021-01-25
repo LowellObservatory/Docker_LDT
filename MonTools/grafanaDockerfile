@@ -2,28 +2,29 @@ ARG GRAFANA_VERSION="latest"
 
 FROM grafana/grafana:${GRAFANA_VERSION}
 
-ARG GF_INSTALL_PLUGINS=""
-ARG GF_PLUGIN_NEWPATH=""
-
-# Set the ENV variable in the layer to the ARG value that we want! Annoying!!
-ENV GF_PATHS_PLUGINS ${GF_PLUGIN_NEWPATH}
-
 USER root
-RUN mkdir -p $GF_PATHS_PLUGINS && chown grafana:grafana $GF_PATHS_PLUGINS
 
 ARG GF_INSTALL_IMAGE_RENDERER_PLUGIN="false"
+
+ARG GF_GID="0"
+
+# Set the ENV variable in the layer to the ARG value that we want! Annoying!!
+ARG GF_PLUGIN_NEWPATH="/var/lib/grafana-plugins" 
+ENV GF_PATHS_PLUGINS ${GF_PLUGIN_NEWPATH}
+
+RUN mkdir -p "$GF_PATHS_PLUGINS" && \
+    chown -R grafana:${GF_GID} "$GF_PATHS_PLUGINS"
 
 RUN if [ $GF_INSTALL_IMAGE_RENDERER_PLUGIN = "true" ]; then \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk --no-cache  upgrade && \
-    apk add --no-cache udev ttf-opensans chromium && \
+    apk add --no-cache dumb-init udev curl openssl nss-tools ttf-opensans chromium && \
     rm -rf /tmp/* && \
     rm -rf /usr/share/grafana/tools/phantomjs; \
 fi
 
-# Switch BACK to the grafana user to get the right permissions!
 USER grafana
 
 ENV GF_RENDERER_PLUGIN_CHROME_BIN="/usr/bin/chromium-browser"
@@ -35,6 +36,8 @@ RUN if [ $GF_INSTALL_IMAGE_RENDERER_PLUGIN = "true" ]; then \
         plugins install grafana-image-renderer; \
 fi
 
+ARG GF_INSTALL_PLUGINS=""
+
 RUN if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then \
     OLDIFS=$IFS; \
         IFS=','; \
@@ -43,3 +46,8 @@ RUN if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then \
         grafana-cli --pluginsDir "$GF_PATHS_PLUGINS" plugins install ${plugin}; \
     done; \
 fi
+
+ENTRYPOINT ["dumb-init"]
+
+CMD ["/run.sh"]
+

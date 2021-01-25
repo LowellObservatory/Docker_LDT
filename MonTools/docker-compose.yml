@@ -9,11 +9,14 @@ services:
     ports: 
       - 8086:8086
       - 8088:8088
+      - 8089:8089/udp
+      - 25826:25826/udp
     volumes:
       - ${DCDATADIR}/influxdb:/var/lib/influxdb
       - ${DCDATADIR}/logs/influxdb:/var/log/influxdb
       - ${DCDEVDIR}/config/influxdb.conf:/etc/influxdb/influxdb.conf:ro
       - ${DCDEVDIR}/influxbackupdump/:/home/influxbackups/
+      - ${DCDEVDIR}/extras/types.db:/usr/share/types.db
     networks:
       - default
     user: ${DCUSERID}:${DCGRPID}
@@ -63,6 +66,59 @@ services:
       - ${DCDEVDIR}/mibs/:/home/telegraf/.snmp/mibs/
     depends_on:
       - 'influxdb'
+    network_mode: "host"
+        #networks:
+        #      - default
+    user: ${DCUSERID}
+    restart: always
+
+  telegrafBridgeOnly:
+    image: 'telegraf/telegrafuserland:${TELEGRAF_VERSION}-alpine'
+    container_name: 'telegrafBridgeOnly'
+    privileged: true
+    environment:
+      HOST_PROC: /rootfs/proc
+      HOST_SYS: /rootfs/sys
+      HOST_ETC: /rootfs/etc
+    hostname: telegrafDocker
+    volumes:
+      - ${DCDATADIR}/logs/telegraf/:/var/log/
+      - ${DCDEVDIR}/config/telegrafBridgeOnly.conf:/etc/telegraf/telegraf.conf:ro
+      - /sys:/rootfs/sys:ro
+      - /proc:/rootfs/proc:ro
+      - /etc:/rootfs/etc:ro
+      - /var/run/utmp:/var/run/utmp
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DCDEVDIR}/mibs/:/home/telegraf/.snmp/mibs/
+    depends_on:
+      - 'influxdb'
+    networks:
+      - default
+    user: ${DCUSERID}
+    restart: always
+
+  telegrafTrapper:
+    image: 'telegraf/telegrafuserland:${TELEGRAF_VERSION}-alpine'
+    container_name: 'telegrafTrapper'
+    privileged: true
+    environment:
+      HOST_PROC: /rootfs/proc
+      HOST_SYS: /rootfs/sys
+      HOST_ETC: /rootfs/etc
+    hostname: telegraf-trapperDocker
+    volumes:
+      - ${DCDATADIR}/logs/telegraf/:/var/log/
+      - ${DCDEVDIR}/config/telegrafTrapper.conf:/etc/telegraf/telegraf.conf:ro
+      - /sys:/rootfs/sys:ro
+      - /proc:/rootfs/proc:ro
+      - /etc:/rootfs/etc:ro
+      - /var/run/utmp:/var/run/utmp
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DCDEVDIR}/mibs/:/home/telegraf/.snmp/mibs/
+    ports:
+      - 162:162/udp
+    depends_on:
+      - 'influxdb'
     networks:
       - default
     user: ${DCUSERID}
@@ -76,7 +132,7 @@ services:
         - GRAFANA_VERSION=${GRAFANA_VERSION}
         - GF_INSTALL_IMAGE_RENDERER_PLUGIN=true
         - GF_PLUGIN_NEWPATH=/home/grafana/plugins/
-        - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,natel-discrete-panel,vonage-status-panel,fetzerch-sunandmoon-datasource,ryantxu-ajax-panel,jdbranham-diagram-panel,natel-plotly-panel,fatcloud-windrose-panel,michaeldmoore-annunciator-panel,blackmirror1-statusbygroup-panel,natel-influx-admin-panel,grafana-image-renderer
+        - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,natel-discrete-panel,vonage-status-panel,fetzerch-sunandmoon-datasource,ryantxu-ajax-panel,jdbranham-diagram-panel,natel-plotly-panel,fatcloud-windrose-panel,michaeldmoore-annunciator-panel,blackmirror1-statusbygroup-panel,natel-influx-admin-panel,grafana-polystat-panel,flant-statusmap-panel,mtanda-histogram-panel,grafana-image-renderer,alexanderzobnin-zabbix-app,innius-video-panel,agenty-flowcharting-panel,aceiot-svg-panel
     image: 'grafana/grafana:${GRAFANA_VERSION}_wplugs'
     container_name: 'grafana'
     ports:
@@ -92,6 +148,36 @@ services:
       - default
     user: ${DCUSERID}:${DCGRPID}
     restart: always
+
+  loki:
+    image: grafana/loki:${LOKI_VERSION}
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes: 
+      - ${DCDEVDIR}/config/loki-config.yaml:/etc/loki/local-config.yaml
+      - ${DCDATADIR}/loki:/tmp/loki
+    command: -print-config-stderr -log-config-reverse-order -config.file=/etc/loki/local-config.yaml
+    user: ${DCUSERID}:${DCGRPID}
+    restart: always
+    networks:
+      - default
+
+  logstash:
+    image: grafana/logstash-output-loki:${LOKI_VERSION}-amd64
+    container_name: logstash
+    ports:
+      - "5400:5400"
+      - "9600:9600"
+    volumes: 
+      - ${DCDEVDIR}/config/logstash-toloki.conf:/home/logstash/logstash-toloki.conf
+      - ${DCDEVDIR}/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+#      - ${DCDATADIR}/logstash:/usr/share/logstash/data/
+    command: -f logstash-toloki.conf
+#    user: ${DCUSERID}:${DCGRPID}
+    restart: always
+    networks:
+      - default
 
 networks:
     default:
