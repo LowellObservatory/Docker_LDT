@@ -42,7 +42,7 @@ services:
     restart: always
  portainer:
     container_name: portainer
-    image: portainer/portainer:${PORTAINER_VERSION}
+    image: portainer/portainer-ce:${PORTAINER_VERSION}-alpine
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DCDATADIR}/portainer:/data
@@ -57,6 +57,7 @@ networks:
     ligDockernetPub:
         name: ligDockernetPub
         driver: bridge
+        #enable_ipv6: false
         #        driver_opts:
         #            parent: eno1
     ligDockernetPrv:

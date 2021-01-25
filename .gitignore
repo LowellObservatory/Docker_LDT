@@ -18,6 +18,7 @@ old/*
 _site/*
 .sass-cache/*
 Gemfile.lock
+.jekyll-cache
 *.gem
 vendor
 serviceTable.md
