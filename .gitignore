@@ -9,6 +9,7 @@ wadsworth.conf
 passwords.conf
 nfsMounts.conf
 nginx_routing.conf
+grafana_smtp.conf
 *.mib
 
 old/*

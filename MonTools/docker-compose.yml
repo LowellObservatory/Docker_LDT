@@ -146,6 +146,8 @@ services:
       - 'influxdb'
     networks:
       - default
+    env_file:
+      - config/grafana_smtp.conf
     user: ${DCUSERID}:${DCGRPID}
     restart: always
 
