@@ -9,6 +9,7 @@ wadsworth.conf
 passwords.conf
 nfsMounts.conf
 nginx_routing.conf
+grafana_smtp.conf
 *.mib
 
 old/*
@@ -18,6 +19,7 @@ old/*
 _site/*
 .sass-cache/*
 Gemfile.lock
+.jekyll-cache
 *.gem
 vendor
 serviceTable.md

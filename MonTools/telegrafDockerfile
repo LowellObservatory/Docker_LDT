@@ -17,8 +17,16 @@ RUN addgroup -g ${groupid} telegraf && \
 RUN delgroup ping && \
     addgroup -g ${dockergid} docker && \
     addgroup telegraf docker && \
-    addgroup -g 666 ping
+    addgroup -g 666 ping && \
+    addgroup telegraf ping
+
+RUN apk add --update --no-cache net-snmp net-snmp-tools net-snmp-libs
+
+#RUN setcap cap_net_raw=eip /usr/bin/telegraf
+#RUN setcap cap_net_bind_service=+ep /usr/bin/telegraf
+RUN setcap cap_net_bind_service,cap_net_raw=+ep /usr/bin/telegraf
+
+#RUN setcap cap_net_raw+p /bin/ping
 
 # Make snmp MIB directory for our additional MIBs
-
 RUN mkdir /home/telegraf/.snmp && mkdir /home/telegraf/.snmp/mibs/

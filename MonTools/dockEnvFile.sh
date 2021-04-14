@@ -8,14 +8,15 @@
 #     2018/08/22
 
 # Desired component versions, hardcoded for production & stability
-export TELEGRAF_VERSION="1.13.4"
-export INFLUXDB_VERSION="1.7.10"
-export CHRONOGRAF_VERSION="1.8.0"
-export GRAFANA_VERSION="6.6.2"
+export TELEGRAF_VERSION="1.17.0"
+export INFLUXDB_VERSION="1.8.3"
+export CHRONOGRAF_VERSION="1.8.8"
+export GRAFANA_VERSION="7.3.7"
+export LOKI_VERSION="2.1.0"
 
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories
-services=("chronograf" "grafana" "influxdb" "telegraf")
+services=("chronograf" "grafana" "influxdb" "telegraf" "loki" "logstash")
 
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.
@@ -42,6 +43,7 @@ echo "TELEGRAF_VERSION=$TELEGRAF_VERSION" >> .env
 echo "INFLUXDB_VERSION=$INFLUXDB_VERSION" >> .env
 echo "CHRONOGRAF_VERSION=$CHRONOGRAF_VERSION" >> .env
 echo "GRAFANA_VERSION=$GRAFANA_VERSION" >> .env
+echo "LOKI_VERSION=$LOKI_VERSION" >> .env
 
 echo "./.env contents:"
 echo "==========="

@@ -12,6 +12,8 @@ services:
       - ${DCDEVDIR}/config/webcams.conf:/home/lig/Codes/NightShift/config/webcams.conf
       - ${DCDEVDIR}/config/passwords.conf:/home/lig/Codes/NightShift/config/passwords.conf
     working_dir: /home/lig/Codes/NightShift
+    environment:
+      - PYTHONFAULTHANDLER=1
     command: ["python", "looper_webcams.py"]
     networks:
       - default
