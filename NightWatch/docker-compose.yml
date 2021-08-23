@@ -17,6 +17,9 @@ services:
     command: ["python", "looper_webcams.py"]
     networks:
       - default
+    dns:
+      - 10.11.131.100
+      - 10.10.100.32
     restart: always
 
   goes:
@@ -35,6 +38,9 @@ services:
     command: ["python", "looper_goes16aws.py"]
     networks:
       - default
+    dns:
+      - 10.11.131.100
+      - 10.10.100.32
     restart: always
 
   radar:
@@ -53,6 +59,9 @@ services:
     command: ["python", "looper_nexradaws.py"]
     networks:
       - default
+    dns:
+      - 10.11.131.100
+      - 10.10.100.32
     restart: always
 
   bokehdctplots:
@@ -77,6 +86,9 @@ services:
       - 5000:5000
     networks:
       - default
+    dns:
+      - 10.11.131.100
+      - 10.10.100.32
     restart: always
 
   djangostack:
@@ -98,6 +110,9 @@ services:
       - ${DCDATADIR}/radar/:/home/djdock/nexrad
       - ${DCDATADIR}/goes/:/home/djdock/goes16
       - ${DCDATADIR}/webcams/:/home/djdock/webcams
+    dns:
+      - 10.11.131.100
+      - 10.10.100.32
 
 networks:
   default:

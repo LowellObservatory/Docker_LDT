@@ -8,7 +8,7 @@
 #     2018/08/22
 
 # Desired component versions, hardcoded for production & stability
-export MINICONDA_VERSION="4.8.2"
+export MINICONDA_VERSION="4.9.2"
 
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories

@@ -8,15 +8,17 @@
 #     2018/08/22
 
 # Desired component versions, hardcoded for production & stability
-export TELEGRAF_VERSION="1.17.0"
-export INFLUXDB_VERSION="1.8.3"
-export CHRONOGRAF_VERSION="1.8.8"
-export GRAFANA_VERSION="7.3.7"
-export LOKI_VERSION="2.1.0"
+export TELEGRAF_VERSION="1.19.3"
+export INFLUXDB_VERSION="1.8.9"
+export CHRONOGRAF_VERSION="1.9.0"
+export KAPACITOR_VERSION="1.5.9"
+export GRAFANA_VERSION="8.1.2"
+export LOKI_VERSION="2.3.0"
+export REDIS_VERSION="6.2.5"
 
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories
-services=("chronograf" "grafana" "influxdb" "telegraf" "loki" "logstash")
+services=("chronograf" "kapacitor" "grafana" "influxdb" "telegraf" "loki" "logstash" "redis")
 
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.
@@ -42,8 +44,10 @@ echo "# Component versions to use" >> .env
 echo "TELEGRAF_VERSION=$TELEGRAF_VERSION" >> .env
 echo "INFLUXDB_VERSION=$INFLUXDB_VERSION" >> .env
 echo "CHRONOGRAF_VERSION=$CHRONOGRAF_VERSION" >> .env
+echo "KAPACITOR_VERSION=$KAPACITOR_VERSION" >> .env
 echo "GRAFANA_VERSION=$GRAFANA_VERSION" >> .env
 echo "LOKI_VERSION=$LOKI_VERSION" >> .env
+echo "REDIS_VERSION=$REDIS_VERSION" >> .env
 
 echo "./.env contents:"
 echo "==========="

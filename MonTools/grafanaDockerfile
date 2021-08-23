@@ -7,9 +7,9 @@ USER root
 ARG GF_INSTALL_IMAGE_RENDERER_PLUGIN="false"
 
 ARG GF_GID="0"
+ARG GF_PLUGIN_NEWPATH="/var/lib/grafana-plugins" 
 
 # Set the ENV variable in the layer to the ARG value that we want! Annoying!!
-ARG GF_PLUGIN_NEWPATH="/var/lib/grafana-plugins" 
 ENV GF_PATHS_PLUGINS ${GF_PLUGIN_NEWPATH}
 
 RUN mkdir -p "$GF_PATHS_PLUGINS" && \
@@ -46,8 +46,3 @@ RUN if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then \
         grafana-cli --pluginsDir "$GF_PATHS_PLUGINS" plugins install ${plugin}; \
     done; \
 fi
-
-ENTRYPOINT ["dumb-init"]
-
-CMD ["/run.sh"]
-

@@ -20,6 +20,13 @@ services:
     networks:
       - default
     user: ${DCUSERID}:${DCGRPID}
+    dns:
+      - 10.11.131.100
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 100m
+        max-file: "3"
     restart: always
 
   chronograf:
@@ -36,6 +43,26 @@ services:
     networks:
       - default
     user: ${DCUSERID}:${DCGRPID}
+    dns:
+      - 10.11.131.100
+    restart: always
+
+  kapacitor:
+    image: 'kapacitor:${KAPACITOR_VERSION}-alpine'
+    container_name: 'kapacitor'
+    ports: 
+      - 9092:9092
+    volumes:
+      - ${DCDEVDIR}/config/kapacitor.conf:/etc/kapacitor/kapacitor.conf
+      - ${DCDATADIR}/logs/kapacitor:/var/log/kapacitor
+      - ${DCDATADIR}/kapacitor:/var/lib/kapacitor
+    depends_on:
+      - "chronograf"
+    networks:
+      - default
+    user: ${DCUSERID}:${DCGRPID}
+    dns:
+      - 10.11.131.100
     restart: always
 
   telegraf:
@@ -70,6 +97,8 @@ services:
         #networks:
         #      - default
     user: ${DCUSERID}
+    dns:
+      - 10.11.131.100
     restart: always
 
   telegrafBridgeOnly:
@@ -95,6 +124,8 @@ services:
     networks:
       - default
     user: ${DCUSERID}
+    dns:
+      - 10.11.131.100
     restart: always
 
   telegrafTrapper:
@@ -122,7 +153,15 @@ services:
     networks:
       - default
     user: ${DCUSERID}
+    dns:
+      - 10.11.131.100
     restart: always
+
+  grafanaRenderer:
+    image: grafana/grafana-image-renderer:latest
+    container_name: 'grafanaRenderer'
+    ports:
+      - 8081
 
   grafana:
     build: 
@@ -130,9 +169,13 @@ services:
       dockerfile: 'grafanaDockerfile'
       args:
         - GRAFANA_VERSION=${GRAFANA_VERSION}
-        - GF_INSTALL_IMAGE_RENDERER_PLUGIN=true
+        - GF_INSTALL_IMAGE_RENDERER_PLUGIN=false
         - GF_PLUGIN_NEWPATH=/home/grafana/plugins/
-        - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,natel-discrete-panel,vonage-status-panel,fetzerch-sunandmoon-datasource,ryantxu-ajax-panel,jdbranham-diagram-panel,natel-plotly-panel,fatcloud-windrose-panel,michaeldmoore-annunciator-panel,blackmirror1-statusbygroup-panel,natel-influx-admin-panel,grafana-polystat-panel,flant-statusmap-panel,mtanda-histogram-panel,grafana-image-renderer,alexanderzobnin-zabbix-app,innius-video-panel,agenty-flowcharting-panel,aceiot-svg-panel
+        - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,natel-discrete-panel,vonage-status-panel,fetzerch-sunandmoon-datasource,ryantxu-ajax-panel,jdbranham-diagram-panel,natel-plotly-panel,fatcloud-windrose-panel,michaeldmoore-annunciator-panel,blackmirror1-statusbygroup-panel,natel-influx-admin-panel,grafana-polystat-panel,flant-statusmap-panel,mtanda-histogram-panel,alexanderzobnin-zabbix-app,innius-video-panel,agenty-flowcharting-panel,aceiot-svg-panel,redis-datasource,redis-app
+    environment:
+      GF_RENDERING_SERVER_URL: http://grafanaRenderer:8081/render
+      GF_RENDERING_CALLBACK_URL: http://grafana:3000/
+      GF_LOG_FILTERS: rendering:debug
     image: 'grafana/grafana:${GRAFANA_VERSION}_wplugs'
     container_name: 'grafana'
     ports:
@@ -149,6 +192,8 @@ services:
     env_file:
       - config/grafana_smtp.conf
     user: ${DCUSERID}:${DCGRPID}
+    dns:
+      - 10.11.131.100
     restart: always
 
   loki:
@@ -162,6 +207,8 @@ services:
     command: -print-config-stderr -log-config-reverse-order -config.file=/etc/loki/local-config.yaml
     user: ${DCUSERID}:${DCGRPID}
     restart: always
+    dns:
+      - 10.11.131.100
     networks:
       - default
 
@@ -178,6 +225,25 @@ services:
     command: -f logstash-toloki.conf
 #    user: ${DCUSERID}:${DCGRPID}
     restart: always
+    dns:
+      - 10.11.131.100
+    networks:
+      - default
+
+  redis:
+    container_name: redis
+    image: redis:${REDIS_VERSION}-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - ${DCDATADIR}/redis:/var/lib/redis
+      - ${DCDEVDIR}/config/redis.conf:/usr/local/etc/redis/redis.conf
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - default
+    restart: always
+    dns:
+      - 10.11.131.100
     networks:
       - default
 

@@ -18,6 +18,8 @@ services:
     networks:
       - default
     user: ${DCUSERID}:${DCGRPID}
+    dns:
+      - 10.11.131.100
     restart: always
 
 networks:
