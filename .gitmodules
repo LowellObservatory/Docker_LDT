@@ -1,0 +1,15 @@
+[submodule "submodules/ligmos"]
+	path = submodules/ligmos
+	url = https://github.com/LowellObservatory/ligmos
+[submodule "submodules/DataServants"]
+	path = submodules/DataServants
+	url = https://github.com/LowellObservatory/DataServants
+[submodule "submodules/NightShift"]
+	path = submodules/NightShift
+	url = https://github.com/LowellObservatory/NightShift
+[submodule "submodules/MrFreeze"]
+	path = submodules/MrFreeze
+	url = https://github.com/LowellObservatory/MrFreeze
+[submodule "submodules/NightWatch"]
+	path = submodules/NightWatch
+	url = https://github.com/LowellObservatory/NightWatch
