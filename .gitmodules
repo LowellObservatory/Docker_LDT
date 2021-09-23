@@ -1,15 +1,18 @@
-[submodule "NightWatch/NightWatch"]
-	path = NightWatch/NightWatch
-	url = https://github.com/LowellObservatory/NightWatch.git
-[submodule "NightWatch/NightShift"]
-	path = NightWatch/NightShift
-	url = https://github.com/LowellObservatory/NightShift.git
-[submodule "MrFreeze/MrFreeze"]
-	path = MrFreeze/MrFreeze
-	url = https://github.com/LowellObservatory/MrFreeze
-[submodule "LDTStack/DataServants"]
-	path = LDTStack/DataServants
-	url = https://github.com/LowellObservatory/DataServants
-[submodule "LDTStack/ligmos"]
-	path = LDTStack/ligmos
+[submodule "submodules/ligmos"]
+	path = submodules/ligmos
 	url = https://github.com/LowellObservatory/ligmos
+[submodule "submodules/DataServants"]
+	path = submodules/DataServants
+	url = https://github.com/LowellObservatory/DataServants
+[submodule "submodules/NightShift"]
+	path = submodules/NightShift
+	url = https://github.com/LowellObservatory/NightShift
+[submodule "submodules/MrFreeze"]
+	path = submodules/MrFreeze
+	url = https://github.com/LowellObservatory/MrFreeze
+[submodule "submodules/NightWatch"]
+	path = submodules/NightWatch
+	url = https://github.com/LowellObservatory/NightWatch
+[submodule "submodules/JohnnyFive"]
+	path = submodules/JohnnyFive
+	url = https://github.com/LowellObservatory/JohnnyFive
