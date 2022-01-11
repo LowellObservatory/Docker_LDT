@@ -2,28 +2,26 @@
 Repository of container files for Lowell codes running out at the 
 4.3m Lowell Discovery Telescope.
 
-## DCTStack
-- Telegraf
+## MonTools
 - InfluxDB
 - Chronograf
-- Grafana
-- ~~ActiveMQ~~ (removed)
-- Lowell Specific Utilities
-    - ligmos
-    - DataServants
-        - Abu
-        - Alfred
-        - Iago
-        - (coming soon) Mandos
-    - Mr. Freeze
-        - Nora
-        - (coming soon) Victor
+- Kapacitor (testing)
+- Telegraf
+- Grafana (w/separate image renderer)
+- Loki
+- Logstash
+- Redis
 
-## sysTools
-- Portainer
-- Dell OpenManage Server Administrator, v8.2
-- nginx (for DNS CNAME routing)
-- jekyll
+## LDTStack
+- ligmos
+- DataServants
+    - Iago
+    - Alfred
+    - Abu
+    - (coming soon) Mandos
+
+## Mr. Freeze
+- Nora
 
 ## NightWatch
 - webStack
@@ -37,3 +35,10 @@ Repository of container files for Lowell codes running out at the
     - GOES-16 reprojection
     - NEXRAD Radar processing
     - Webcam image grabber
+
+## sysTools
+- Portainer
+- Dell OpenManage Server Administrator, v8.2
+- nginx (for DNS CNAME routing)
+- jekyll
+
