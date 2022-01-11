@@ -1,0 +1,14 @@
+Ubiquiti Nanostation M5 MIBS available at:
+wget https://www.ui.com/downloads/firmwares/airos-ubnt-mib/ubnt-mib.zip
+unzip ubnt-mib.zip
+
+http://dl.ubnt-ut.com/snmp/UBNT-UniFi-MIB
+
+APC MIBs available at:
+(somewhere deep inside APC's awful website.  Google will get you there quicker)
+
+Synology MIBs available at:
+https://global.download.synology.com/download/Document/Software/DeveloperGuide/Firmware/DSM/All/enu/Synology_MIB_File.zip
+
+Link in the PDF that shows up here:
+https://www.synology.com/support/snmp_mib

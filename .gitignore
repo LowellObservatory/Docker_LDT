@@ -29,5 +29,8 @@ NightWatch/config/
 
 *.conf
 
-mibs/
+MonTools/mibs/*.txt
+MonTools/mibs/*.mib
+LDTStack/mibs/*.txt
+LDTStack/mibs/*.mib
 SysTools/nginx-proxyman_config.json
