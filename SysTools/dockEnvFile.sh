@@ -12,7 +12,7 @@ export PORTAINER_VERSION="2.6.2"
 
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories
-services=("portainer" "jekyll")
+services=("portainer" "jekyll" "nginx-proxyman" "letsencrypt")
 
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.

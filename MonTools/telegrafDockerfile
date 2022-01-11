@@ -6,27 +6,37 @@ FROM telegraf:${version}-alpine
 ARG userid="1000"
 ARG groupid="1000"
 ARG dockergid="999"
+ARG mibdir='./mibs/'
 
 # In the *container*
-#   Note that a matching group is added automatically
-
+#   Destroy the existing user and recreate it in our own image
+#   using the UID/GID of the runtime user from the host
+RUN deluser telegraf
 RUN addgroup -g ${groupid} telegraf && \
-    adduser telegraf -u ${userid} -G telegraf \
-    -g -D -S
+    adduser telegraf -u ${userid} -G telegraf -g -D -S
 
-RUN delgroup ping && \
-    addgroup -g ${dockergid} docker && \
-    addgroup telegraf docker && \
-    addgroup -g 666 ping && \
+# There's a conflict of the default ping GID (999), so remake it
+RUN delgroup ping && addgroup -g 666 ping && \
     addgroup telegraf ping
 
+# Make the docker group and add the new telegraf user to it
+RUN addgroup -g ${dockergid} docker && \
+    addgroup telegraf docker
+
+# Re-own any telegraf files
+RUN chown -R telegraf:telegraf /etc/telegraf 
+
+# Add snmp stuff
 RUN apk add --update --no-cache net-snmp net-snmp-tools net-snmp-libs
 
+#RUN setcap cap_net_raw+p /bin/ping
 #RUN setcap cap_net_raw=eip /usr/bin/telegraf
 #RUN setcap cap_net_bind_service=+ep /usr/bin/telegraf
 RUN setcap cap_net_bind_service,cap_net_raw=+ep /usr/bin/telegraf
 
-#RUN setcap cap_net_raw+p /bin/ping
+# Copy in the SNMP MIBs to the default location
+COPY ${mibdir} /usr/share/snmp/mibs/
 
-# Make snmp MIB directory for our additional MIBs
-RUN mkdir /home/telegraf/.snmp && mkdir /home/telegraf/.snmp/mibs/
+# Set working directory for userland
+USER telegraf
+WORKDIR /home/telegraf/

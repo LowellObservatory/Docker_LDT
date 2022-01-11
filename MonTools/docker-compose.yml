@@ -74,28 +74,24 @@ services:
         - userid=${DCUSERID}
         - groupid=${DCGRPID}
         - dockergid=${DCDOCKERID}
+#        - mibdir=${DCDEVDIR}/mibs/
+        - mibdir=mibs/
     image: 'telegraf/telegrafuserland:${TELEGRAF_VERSION}-alpine'
     container_name: 'telegraf'
     privileged: true
     environment:
-      HOST_PROC: /rootfs/proc
-      HOST_SYS: /rootfs/sys
-      HOST_ETC: /rootfs/etc
+      HOST_MOUNT_PREFIX: /hostfs/
+      HOST_PROC: /hostfs/proc
     hostname: telegrafDocker
     volumes:
-      - ${DCDATADIR}/logs/telegraf/:/var/log/
-      - ${DCDEVDIR}/config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      - /sys:/rootfs/sys:ro
-      - /proc:/rootfs/proc:ro
-      - /etc:/rootfs/etc:ro
       - /var/run/utmp:/var/run/utmp
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${DCDEVDIR}/mibs/:/home/telegraf/.snmp/mibs/
+      - ${DCDATADIR}/logs/telegraf/:/var/log/
+      - ${DCDEVDIR}/config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /:/hostfs/:ro
     depends_on:
       - 'influxdb'
     network_mode: "host"
-        #networks:
-        #      - default
     user: ${DCUSERID}
     dns:
       - 10.11.131.100
@@ -105,20 +101,11 @@ services:
     image: 'telegraf/telegrafuserland:${TELEGRAF_VERSION}-alpine'
     container_name: 'telegrafBridgeOnly'
     privileged: true
-    environment:
-      HOST_PROC: /rootfs/proc
-      HOST_SYS: /rootfs/sys
-      HOST_ETC: /rootfs/etc
     hostname: telegrafDocker
     volumes:
       - ${DCDATADIR}/logs/telegraf/:/var/log/
       - ${DCDEVDIR}/config/telegrafBridgeOnly.conf:/etc/telegraf/telegraf.conf:ro
-      - /sys:/rootfs/sys:ro
-      - /proc:/rootfs/proc:ro
-      - /etc:/rootfs/etc:ro
-      - /var/run/utmp:/var/run/utmp
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${DCDEVDIR}/mibs/:/home/telegraf/.snmp/mibs/
+#      - ${DCDEVDIR}/mibs/:/home/telegraf/.snmp/mibs/
     depends_on:
       - 'influxdb'
     networks:
@@ -132,20 +119,10 @@ services:
     image: 'telegraf/telegrafuserland:${TELEGRAF_VERSION}-alpine'
     container_name: 'telegrafTrapper'
     privileged: true
-    environment:
-      HOST_PROC: /rootfs/proc
-      HOST_SYS: /rootfs/sys
-      HOST_ETC: /rootfs/etc
     hostname: telegraf-trapperDocker
     volumes:
       - ${DCDATADIR}/logs/telegraf/:/var/log/
       - ${DCDEVDIR}/config/telegrafTrapper.conf:/etc/telegraf/telegraf.conf:ro
-      - /sys:/rootfs/sys:ro
-      - /proc:/rootfs/proc:ro
-      - /etc:/rootfs/etc:ro
-      - /var/run/utmp:/var/run/utmp
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${DCDEVDIR}/mibs/:/home/telegraf/.snmp/mibs/
     ports:
       - 162:162/udp
     depends_on:
@@ -160,8 +137,14 @@ services:
   grafanaRenderer:
     image: grafana/grafana-image-renderer:latest
     container_name: 'grafanaRenderer'
+    networks:
+      - default
     ports:
       - 8081
+    dns:
+      - 10.11.131.100
+    restart: always
+
 
   grafana:
     build: 
@@ -221,9 +204,9 @@ services:
     volumes: 
       - ${DCDEVDIR}/config/logstash-toloki.conf:/home/logstash/logstash-toloki.conf
       - ${DCDEVDIR}/config/logstash.yml:/usr/share/logstash/config/logstash.yml
-#      - ${DCDATADIR}/logstash:/usr/share/logstash/data/
+      - ${DCDATADIR}/logstash:/usr/share/logstash/data/
     command: -f logstash-toloki.conf
-#    user: ${DCUSERID}:${DCGRPID}
+    user: ${DCUSERID}:${DCGRPID}
     restart: always
     dns:
       - 10.11.131.100
@@ -246,6 +229,24 @@ services:
       - 10.11.131.100
     networks:
       - default
+
+  ftp:
+    container_name: ftp
+    build:
+      context: 'docker-vsftpd'
+      dockerfile: 'Dockerfile'
+      args:
+        - FTP_UID=${DCUSERID}
+        - FTP_GID=${DCGRPID}
+    image: vsftpd-customugid
+    environment:
+      - FTP_USER=ldtPrivateFTP
+      - FTP_PASSWORD=LdTFtPWeE
+    volumes:
+      - ${DCDATADIR}/logs/ftp:/var/log/
+      - ${DCDATADIR}/ftp:/srv/ldtPrivateFTP/
+    network_mode: "host"
+    restart: always
 
 networks:
     default:

@@ -1,6 +1,31 @@
 version: '3.7'
 
 services:
+ nginx-proxyman:
+    container_name: nginx-proxyman
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: always
+    networks:
+      - ligDockernetPub
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+      - '5544:5544'
+      - '5544:5544/udp'
+      - '18899:18899'
+      - '18899:18899/udp'
+    environment:
+       DB_SQLITE_FILE: "/data/database.sqlite"
+       DISABLE_IPV6: 'true'
+    volumes:
+      - ${DCDATADIR}/nginx-proxyman:/data
+      - ${DCDATADIR}/letsencrypt:/etc/letsencrypt
+      - ${DCDEVDIR}/nginx-proxyman_config.json:/app/config/production.json
+      - ${DCDATADIR}/logs/letsencrypt/:/var/log/letsencrypt/
+    dns:
+      - 10.11.131.100
+ 
  omsa:
     container_name: omsa84
     image: jdelaros1/dell-omsa84
@@ -16,22 +41,20 @@ services:
      - "/lib/modules:/lib/modules:ro"
     dns:
       - 10.11.131.100
-      - 10.10.100.32
 
- nginx-frontline:
-    container_name: nginx-frontline
-    image: nginx:stable-alpine
-#    ports:
-#     - 80:80
-    network_mode: host
-    #    networks:
-    #  - ligDockernetPub
-    restart: always
-    volumes:
-     - $PWD/nginx_routing.conf:/etc/nginx/conf.d/default.conf
-    dns:
-      - 10.11.131.100
-      - 10.10.100.32
+# nginx-frontline:
+#   container_name: nginx-frontline
+#   image: nginx:stable-alpine
+##   ports:
+##    - 80:80
+#   network_mode: host
+##      networks:
+##     - ligDockernetPub
+#   restart: always
+#   volumes:
+#    - $PWD/nginx_routing.conf:/etc/nginx/conf.d/default.conf
+#   dns:
+#     - 10.11.131.100
 
  jekyll:
     container_name: jekyll
@@ -50,7 +73,6 @@ services:
     restart: always
     dns:
       - 10.11.131.100
-      - 10.10.100.32
 
  portainer:
     container_name: portainer
@@ -66,7 +88,6 @@ services:
     restart: always
     dns:
       - 10.11.131.100
-      - 10.10.100.32
 
 networks:
     ligDockernetPub:
@@ -80,4 +101,9 @@ networks:
         driver: macvlan
         driver_opts:
             parent: eno4
+#        ipam:
+#            config:
+#              - subnet: "192.168.33.0/24"
+#                ip_range: "192.168.33.43/32"
+#                gateway: "192.168.33.1"
 

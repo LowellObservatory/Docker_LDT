@@ -8,17 +8,17 @@
 #     2018/08/22
 
 # Desired component versions, hardcoded for production & stability
-export TELEGRAF_VERSION="1.19.3"
-export INFLUXDB_VERSION="1.8.9"
-export CHRONOGRAF_VERSION="1.9.0"
-export KAPACITOR_VERSION="1.5.9"
-export GRAFANA_VERSION="8.1.2"
-export LOKI_VERSION="2.3.0"
-export REDIS_VERSION="6.2.5"
+export TELEGRAF_VERSION="1.21.2"
+export INFLUXDB_VERSION="1.8.10"
+export CHRONOGRAF_VERSION="1.9.1"
+export KAPACITOR_VERSION="1.6.2"
+export GRAFANA_VERSION="8.3.3"
+export LOKI_VERSION="2.4.1"
+export REDIS_VERSION="6.2.6"
 
 # NO COMMAS!!!
 #   This list is used to check/make the data storage directories
-services=("chronograf" "kapacitor" "grafana" "influxdb" "telegraf" "loki" "logstash" "redis")
+services=("chronograf" "kapacitor" "grafana" "influxdb" "telegraf" "loki" "logstash" "redis" "ftp")
 
 # If you're on OS X, `getent` isn't there because Apple didn't invent it,
 #   so they instead invented a horribly more complex replacement.
@@ -108,6 +108,15 @@ if [ -d "$backdir" ]; then
 else
     echo "$backdir is nogood!"
     mkdir "$backdir"
+    echo "...so I made it good."
+fi
+
+boltdir="$DOCKDATADIR/ftp/nexstorm"
+if [ -d "$boltdir" ]; then
+    echo "$boltdir is good!"
+else
+    echo "$boltdir is nogood!"
+    mkdir "$boltdir"
     echo "...so I made it good."
 fi
 

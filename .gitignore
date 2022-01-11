@@ -30,3 +30,4 @@ NightWatch/config/
 *.conf
 
 mibs/
+SysTools/nginx-proxyman_config.json
