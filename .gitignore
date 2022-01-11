@@ -28,6 +28,7 @@ influxbackupdump
 NightWatch/config/
 
 *.conf
+MonTools/config/grafana.ini
 
 MonTools/mibs/*.txt
 MonTools/mibs/*.mib
