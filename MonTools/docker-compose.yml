@@ -186,7 +186,7 @@ services:
       - "3100:3100"
     volumes: 
       - ${DCDEVDIR}/config/loki-config.yaml:/etc/loki/local-config.yaml
-      - ${DCDATADIR}/loki:/tmp/loki
+      - ${DCDATADIR}/loki:/loki
     command: -print-config-stderr -log-config-reverse-order -config.file=/etc/loki/local-config.yaml
     user: ${DCUSERID}:${DCGRPID}
     restart: always
