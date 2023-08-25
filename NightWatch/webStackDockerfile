@@ -1,52 +1,28 @@
-# Copyright 2013 Thatcher Peskens
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#    http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# 
-# Cloned from https://github.com/Koff/alpine-python3-django-uwsgi-nginx
-# commit ead32605ce7a8ee42feae9b333f3c5a0bb0195a5
-
-FROM alpine:latest
+FROM python:3.11-slim-bookworm
 
 # Install required packages and remove the apt packages cache when done.
 #apk update && apk upgrade && \
-RUN apk update 
-RUN apk add bash \
+RUN apt-get update && \
+    apt-get install -y \
+        bash \
 	git \
-	openssh \
-	python3 \
-	python3-dev \
+	openssh-client \
 	gcc \
-	build-base \
-	linux-headers \
-	pcre-dev \
-	postgresql-dev \
-	musl-dev \
+	build-essential \
+	postgresql \
 	libxml2-dev \
 	libxslt-dev \
+        libpq-dev \
 	nginx \
 	curl \
-        jpeg-dev \
-        zlib-dev \
+        libjpeg-dev \
+        zlib1g-dev \
 	supervisor && \
-	python3 -m ensurepip && \
-    rm -r /usr/lib/python*/ensurepip && \
-    pip3 install --upgrade pip setuptools && \
-    rm -r /root/.cache && \
-    pip3 install --upgrade pip setuptools && \
-    rm -r /root/.cache
+    pip3 install --upgrade pip setuptools
 
 # install uwsgi now because it takes a little while
 RUN pip3 install uwsgi
+RUN pip3 install pandas
 
 # We need bokeh, because we get the plots over its servers' websocket
 #   Unfortunately it'll take a little while to build
@@ -79,4 +55,4 @@ RUN python3 manage.py collectstatic
 
 WORKDIR /home/djdock/
 EXPOSE 8113
-CMD ["supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisor-app.conf"]
+CMD ["supervisord", "-e", "debug", "-n", "-c", "/etc/supervisor/conf.d/supervisor-app.conf"]
