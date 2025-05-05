@@ -8,7 +8,8 @@ echo "Rebuilding base image..."
 docker build --force-rm -f NightShift/dockerfiles/nightshiftDockerfile --tag nightshiftbase NightShift/
 
 echo "Rebuilding other images..."
-docker-compose build
+docker compose build
 
 echo "Restarting..."
-docker-compose down; docker system prune -f; docker-compose up -d
+# HACK TO KEEP DATA PROCESSING WHILE DEBUGGING
+docker compose down djangostack; docker system prune -f; docker compose up -d

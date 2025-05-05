@@ -1,4 +1,4 @@
-version: '3.7'
+#version: '3.7'
 
 services:
   webcams:
@@ -14,7 +14,7 @@ services:
     working_dir: /home/lig/Codes/NightShift
     environment:
       - PYTHONFAULTHANDLER=1
-    command: ["python", "looper_webcams.py"]
+    command: ["conda", "run", "-n", "ligbase", "python", "looper_webcams.py"]
     networks:
       - default
     dns:
@@ -35,7 +35,8 @@ services:
       - ${DCDATADIR}/goes/cartopy:/home/lig/.local/share/cartopy/
       - ${DCDEVDIR}/config/awsCreds.conf:/home/lig/Codes/NightShift/config/awsCreds.conf
     working_dir: /home/lig/Codes/NightShift/
-    command: ["python", "looper_goes16aws.py"]
+    command: ["conda", "run", "-n", "ligbase", "python", "looper_goes16aws.py"]
+#    command: ["python", "looper_goes16aws.py"]
     networks:
       - default
     dns:
@@ -56,7 +57,7 @@ services:
       - ${DCDATADIR}/goes/cartopy:/home/lig/.local/share/cartopy/
       - ${DCDEVDIR}/config/awsCreds.conf:/home/lig/Codes/NightShift/config/awsCreds.conf
     working_dir: /home/lig/Codes/NightShift/
-    command: ["python", "looper_nexradaws.py"]
+    command: ["conda", "run", "-n", "ligbase", "python", "looper_nexradaws.py"]
     networks:
       - default
     dns:
@@ -64,32 +65,32 @@ services:
       - 10.10.100.32
     restart: always
 
-  bokehdctplots:
-    build:
-      context: './NightShift/dockerfiles/'
-      dockerfile: 'bokehDockerfile'
-    container_name: 'bokehdctplots'
-    depends_on:
-      - "webcams"
-    volumes:
-      - ${DCDATADIR}/logs/bokehdctplots/:/home/lig/Codes/NightShift/outputs/logs/
-      - ${DCDEVDIR}/config/dbqueries.conf:/home/lig/Codes/NightShift/config/dbqueries.conf
-      - ${DCDEVDIR}/config/modules.conf:/home/lig/Codes/NightShift/config/modules.conf
-      - ${DCDEVDIR}/config/passwords.conf:/home/lig/Codes/NightShift/config/passwords.conf
-    working_dir: /home/lig/Codes/NightShift/
-    environment:
-      - BOKEH_LOG_LEVEL=debug
-      - BOKEH_PY_LOG_LEVEL=debug
-      - BOKEH_PRETTY=true
-    command: ["python", "server_bokeh_dctplots.py"]
-    ports:
-      - 5000:5000
-    networks:
-      - default
-    dns:
-      - 10.11.131.100
-      - 10.10.100.32
-    restart: always
+#  bokehdctplots:
+#    build:
+#      context: './NightShift/dockerfiles/'
+#      dockerfile: 'bokehDockerfile'
+#    container_name: 'bokehdctplots'
+#    depends_on:
+#      - "webcams"
+#    volumes:
+#      - ${DCDATADIR}/logs/bokehdctplots/:/home/lig/Codes/NightShift/outputs/logs/
+#      - ${DCDEVDIR}/config/dbqueries.conf:/home/lig/Codes/NightShift/config/dbqueries.conf
+#      - ${DCDEVDIR}/config/modules.conf:/home/lig/Codes/NightShift/config/modules.conf
+#      - ${DCDEVDIR}/config/passwords.conf:/home/lig/Codes/NightShift/config/passwords.conf
+#    working_dir: /home/lig/Codes/NightShift/
+#    environment:
+#      - BOKEH_LOG_LEVEL=debug
+#      - BOKEH_PY_LOG_LEVEL=debug
+#      - BOKEH_PRETTY=true
+#    command: ["python", "server_bokeh_dctplots.py"]
+#    ports:
+#      - 5000:5000
+#    networks:
+#      - default
+#    dns:
+#      - 10.11.131.100
+#      - 10.10.100.32
+#    restart: always
 
   djangostack:
     build:
@@ -100,7 +101,7 @@ services:
       - "radar"
       - "goes"
       - "webcams"
-      - "bokehdctplots"
+#      - "bokehdctplots"
     ports:
       - 9876:8113
     networks:
@@ -108,7 +109,7 @@ services:
     restart: always
     volumes:
       - ${DCDATADIR}/radar/:/home/djdock/nexrad
-      - ${DCDATADIR}/goes/:/home/djdock/goes16
+      - ${DCDATADIR}/goes/:/home/djdock/goes
       - ${DCDATADIR}/webcams/:/home/djdock/webcams
     dns:
       - 10.11.131.100
