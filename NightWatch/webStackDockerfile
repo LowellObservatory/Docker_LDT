@@ -1,4 +1,4 @@
-FROM python:3.11-slim-bookworm
+FROM python:3.12-slim-bookworm
 
 # Install required packages and remove the apt packages cache when done.
 #apk update && apk upgrade && \
@@ -18,15 +18,11 @@ RUN apt-get update && \
         libjpeg-dev \
         zlib1g-dev \
 	supervisor && \
-    pip3 install --upgrade pip setuptools
+    pip3 install --upgrade pip setuptools wheel
 
 # install uwsgi now because it takes a little while
 RUN pip3 install uwsgi
 RUN pip3 install pandas
-
-# We need bokeh, because we get the plots over its servers' websocket
-#   Unfortunately it'll take a little while to build
-RUN pip3 install bokeh
 
 # COPY requirements.txt and RUN pip install BEFORE adding the rest of your
 # code, this will cause Docker's caching mechanism to prevent re-installing

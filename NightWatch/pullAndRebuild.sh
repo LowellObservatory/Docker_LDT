@@ -12,4 +12,7 @@ docker compose build
 
 echo "Restarting..."
 # HACK TO KEEP DATA PROCESSING WHILE DEBUGGING
-docker compose down djangostack; docker system prune -f; docker compose up -d
+#docker compose down djangostack; docker system prune -f; docker compose up -d
+
+# Nominal down and up dance
+docker compose down; docker system prune -f; docker compose up -d
